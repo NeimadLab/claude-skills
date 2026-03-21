@@ -1,3 +1,9 @@
+---
+name: PISA
+description: Presentation Intelligence & Slide Architecture — analyze, generate, retheme, and review professional PowerPoint decks
+version: 1.0.0
+---
+
 # PISA — Presentation Intelligence & Slide Architecture
 
 ## Trigger
