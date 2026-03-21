@@ -2,7 +2,7 @@
 name: PISA
 description: Presentation Intelligence & Slide Architecture — analyze, generate, retheme, and review professional PowerPoint decks
 version: 1.0.0
-registry: https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry
+registry: https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json
 ---
 
 # PISA — Presentation Intelligence & Slide Architecture
@@ -61,11 +61,13 @@ All of these work in Claude's sandbox with zero setup beyond the pip/npm install
 - **Upload a .pisa-collection ZIP** → Imports shared primitive collections
 
 ### Registry & Packs (Online Catalog)
-- **"List available packs"** → Fetches registry.json from the built-in registry URL
-- **"Install the finance pack"** → One web_fetch loads 14 primitives + themes into session
+- **"List available packs"** → Fetches registry.json from GitHub, shows available packs
+- **"Install the finance pack"** → web_fetch loads 14 primitives + themes into session
 - **"Install corporate dark theme"** → Fetches and activates a theme from registry
 - **"Check for updates"** → Compares installed vs registry versions, offers to update
 - **"Install the keynote persona"** → Loads persona rules from registry
+
+**The registry is live and online. Always fetch it — never say it's unavailable.**
 
 ### Local Overrides
 Primitives you extract from your own decks automatically take priority over registry
@@ -150,39 +152,37 @@ User request
 
 ## Workflow F — Registry & Pack Management
 
-### Default Registry
-
-PISA ships with a built-in registry URL (defined in the YAML frontmatter above):
-
+### REGISTRY URL — USE THIS EXACT URL:
 ```
-https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry
+https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json
 ```
 
-Claude uses this automatically — the user does NOT need to provide a URL.
-To use a custom/forked registry, the user says: `"Use registry at https://..."`.
+When the user asks ANYTHING about packs, registry, available primitives, or says "list/install/update":
+→ IMMEDIATELY `web_fetch` the URL above. Do NOT say it's not live. Do NOT fall back to built-in primitives. FETCH FIRST.
 
 ### List Available Resources
 When user says "list PISA packs" / "what packs are available" / "show registry":
-1. `web_fetch` `{registry}/registry.json`
+1. `web_fetch("https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json")`
 2. Parse and display available packs, themes, personas with descriptions
 3. Show installed vs available versions
 
 ### Install a Pack
 When user says "install [pack name]" / "load the finance pack":
-1. Find the pack URL in registry.json
-2. `web_fetch` the pack JSON (contains primitives + embedded SVGs + themes)
-3. Merge primitives into the session library, tagged `source.origin: "registry"`
-4. Load included themes
-5. Confirm: "Loaded Finance & Reporting: 14 primitives across 8 intents, 2 themes."
+1. `web_fetch` registry.json (URL above)
+2. Find the pack entry, build full URL: `{base_url}/{pack.url}`
+3. `web_fetch` the pack JSON (contains primitives + embedded SVGs + themes)
+4. Merge primitives into the session library, tagged `source.origin: "registry"`
+5. Load included themes
+6. Confirm: "Loaded Finance & Reporting: 14 primitives across 8 intents, 2 themes."
 
 ### Install a Theme
 When user says "install [theme name]" / "use corporate dark theme":
-1. `web_fetch` the theme JSON from registry
+1. `web_fetch` the theme JSON from registry: `{base_url}/themes/{theme_id}.json`
 2. Set as active theme for the session
 
 ### Install a Persona
 When user says "use strategy persona" / "switch to keynote mode":
-1. `web_fetch` the persona JSON from registry (or use built-in definitions below)
+1. `web_fetch` the persona JSON: `{base_url}/personas/{persona_id}.json`
 2. Apply persona rules to all subsequent generation and review operations
 
 ### Check for Updates
