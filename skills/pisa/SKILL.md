@@ -2,6 +2,7 @@
 name: PISA
 description: Presentation Intelligence & Slide Architecture — analyze, generate, retheme, and review professional PowerPoint decks
 version: 1.0.0
+registry: https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry
 ---
 
 # PISA — Presentation Intelligence & Slide Architecture
@@ -60,11 +61,18 @@ All of these work in Claude's sandbox with zero setup beyond the pip/npm install
 - **Upload a .pisa-collection ZIP** → Imports shared primitive collections
 
 ### Registry & Packs (Online Catalog)
-- **"List available packs"** → Fetches registry.json from your GitHub, shows available packs
+- **"List available packs"** → Fetches registry.json from the built-in registry URL
 - **"Install the finance pack"** → One web_fetch loads 14 primitives + themes into session
 - **"Install corporate dark theme"** → Fetches and activates a theme from registry
 - **"Check for updates"** → Compares installed vs registry versions, offers to update
 - **"Install the keynote persona"** → Loads persona rules from registry
+
+### Local Overrides
+Primitives you extract from your own decks automatically take priority over registry
+primitives. Your brand, your layouts, your style — always used first.
+- **Upload your deck** → Extract → your primitives are tagged `local` and used first
+- **"I prefer my KPI layout"** → Tags it as `override`, always selected over registry
+- **"Use the registry version"** → Forces the pack version for that slide
 
 ### Persistence Between Sessions
 Library resets between sessions. Three ways to persist:
@@ -127,25 +135,35 @@ User request
     ↓
 [4] Load library (session JSON, or from uploaded file, or install pack from registry)
     ↓
-[5] Execute workflow steps
+[5] Resolve primitives: local > override > registry
     ↓
-[6] Render → pptxgenjs for PPTX output, SVG for previews via show_widget
+[6] Execute workflow steps
     ↓
-[7] Programmatic QA → validate PPTX with python-pptx (no LibreOffice)
+[7] Render → pptxgenjs for PPTX output, SVG for previews via show_widget
     ↓
-[8] Deliver PPTX + offer library export
+[8] Programmatic QA → validate PPTX with python-pptx (no LibreOffice)
+    ↓
+[9] Deliver PPTX + offer library export
 ```
 
 ---
 
 ## Workflow F — Registry & Pack Management
 
-Claude can fetch packs, themes, and personas from a public GitHub registry.
-The user provides their registry URL once; Claude stores it for the session.
+### Default Registry
+
+PISA ships with a built-in registry URL (defined in the YAML frontmatter above):
+
+```
+https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry
+```
+
+Claude uses this automatically — the user does NOT need to provide a URL.
+To use a custom/forked registry, the user says: `"Use registry at https://..."`.
 
 ### List Available Resources
 When user says "list PISA packs" / "what packs are available" / "show registry":
-1. `web_fetch` the registry.json at the user's registry URL
+1. `web_fetch` `{registry}/registry.json`
 2. Parse and display available packs, themes, personas with descriptions
 3. Show installed vs available versions
 
@@ -153,7 +171,7 @@ When user says "list PISA packs" / "what packs are available" / "show registry":
 When user says "install [pack name]" / "load the finance pack":
 1. Find the pack URL in registry.json
 2. `web_fetch` the pack JSON (contains primitives + embedded SVGs + themes)
-3. Merge primitives into the session library
+3. Merge primitives into the session library, tagged `source.origin: "registry"`
 4. Load included themes
 5. Confirm: "Loaded Finance & Reporting: 14 primitives across 8 intents, 2 themes."
 
@@ -337,7 +355,13 @@ Analyze this slide image. Produce a JSON object with these exact fields:
     {"type": "kpi_unit | image_caption | standalone", "members": [0, 3]}
   ],
   "reading_order": [0, 1, 2, 3],
-  "quality_score": 0-10
+  "quality_score": 0-10,
+  "source": {
+    "origin": "local | registry | override",
+    "file": "input.pptx or pack ID",
+    "slide": 0,
+    "extractor": "xml | vision | manual"
+  }
 }
 
 Rules:
@@ -389,6 +413,40 @@ When user describes slides they want:
 ### B1. Parse brief into slide plan
 For each slide: intent + key message + supporting content.
 If persona is active, filter intents through preferred/discouraged lists.
+
+### B1b. Resolve primitives (local > remote)
+
+For each slide in the plan, select the best primitive using this priority:
+
+```
+RESOLUTION ORDER (highest priority first):
+
+1. LOCAL — primitives extracted from the user's own deck this session
+   source.origin = "local"
+   These capture the user's actual brand, layout, and style.
+
+2. OVERRIDE — registry primitives the user has modified this session
+   source.origin = "override"
+   User said "I prefer this layout" or edited a registry primitive.
+
+3. REGISTRY — primitives installed from packs
+   source.origin = "registry"
+   Generic professional templates from the online catalog.
+```
+
+When multiple primitives match an intent, prefer the one with:
+1. Higher priority origin (local > override > registry)
+2. Higher quality_score (within the same origin tier)
+3. Better layout match for the content
+
+The user can force a specific source:
+- "Use my extracted KPI layout" → forces local
+- "Use the registry version" → forces registry
+- "Use the startup pack's cover" → forces a specific pack
+
+If no primitives exist for a required intent:
+- If registry is available: auto-install the corporate essentials pack
+- If offline: generate a minimal layout from the intent definition
 
 ### B2. Show SVG preview of selected primitives
 Before rendering the PPTX, show the user what each slide will look like

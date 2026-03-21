@@ -2,11 +2,15 @@
 
 The PISA registry is a collection of JSON files served via raw GitHub URLs. Claude fetches them at runtime with `web_fetch`. No server, no API.
 
-## Registry URL
+## Built-in Registry
+
+PISA ships with a default registry URL baked into SKILL.md. Users don't need to configure anything — just say "install the finance pack" and it works.
 
 ```
-https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json
+https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry
 ```
+
+To use a fork or custom registry: `"Use registry at https://..."`
 
 ## Structure
 

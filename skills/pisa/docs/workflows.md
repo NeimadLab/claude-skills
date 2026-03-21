@@ -23,7 +23,10 @@ PISA detects which workflow to run based on the user's request.
 
 1. Detect persona (explicit or inferred from context)
 2. Plan slide sequence (narrative arc based on persona)
-3. For each slide: select best primitive from library by intent
+3. For each slide: resolve the best primitive using priority order:
+   - **LOCAL** (extracted from user's deck) → highest priority
+   - **OVERRIDE** (user-modified registry primitive) → second
+   - **REGISTRY** (installed from packs) → fallback
 4. Fill primitive with user content, enforce density limits
 5. Resolve theme tokens → concrete values
 6. Render via pptxgenjs → PPTX file
@@ -63,8 +66,10 @@ PISA detects which workflow to run based on the user's request.
 
 **Triggers:** "install the finance pack", "list available packs", "check for updates"
 
+PISA ships with a built-in registry URL — no user setup required. To use a custom registry, say: "Use registry at https://..."
+
 - **List:** Fetch registry.json → display available packs/themes/personas
-- **Install pack:** Fetch pack JSON → merge primitives into session library
+- **Install pack:** Fetch pack JSON → merge primitives (tagged `origin: "registry"`) into session library
 - **Install theme:** Fetch theme JSON → set as active theme
 - **Install persona:** Fetch persona JSON → apply rules to generation
 - **Update:** Compare installed versions with registry → offer to re-fetch

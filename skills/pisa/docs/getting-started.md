@@ -14,16 +14,9 @@ Download [`SKILL.md`](../SKILL.md) and add it to any Claude Project as **Project
 
 That's it. Claude now has PISA expertise — no other setup needed.
 
-## Step 2 — Connect the Registry
+## Step 2 — Install a Pack
 
-Tell Claude:
-
-```
-Use my PISA registry at
-https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json
-```
-
-## Step 3 — Install a Pack
+The registry URL is built into SKILL.md — no setup needed. Just say:
 
 ```
 Install the corporate essentials pack
@@ -31,7 +24,7 @@ Install the corporate essentials pack
 
 → 24 primitives across 21 intents, loaded in seconds.
 
-## Step 4 — Create Something
+## Step 3 — Create Something
 
 ```
 Create a 10-slide Q3 performance review using the executive persona
@@ -59,6 +52,7 @@ Retheme this deck using the finance dark theme
 | **Review** | "Score this deck" → programmatic QA + rubric |
 | **Catalog** | "Show KPI layouts" → SVG previews inline |
 | **Registry** | "Install finance pack" → fetch from GitHub |
+| **Local override** | Upload your deck → your primitives take priority over registry |
 
 ## Dependencies
 

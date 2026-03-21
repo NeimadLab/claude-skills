@@ -150,6 +150,7 @@ Use when `role` = `body` but the content has internal structure that shouldn't b
   "version": 1,
   
   "source": {
+    "origin": "local",
     "file": "input.pptx",
     "slide": 1,
     "extracted_at": "2026-03-21T18:00:00",

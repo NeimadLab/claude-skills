@@ -30,12 +30,23 @@ All new fields are optional. V2.0 primitives remain valid V2.1 primitives.
   "reading_order": [0, 1, 2, 3],
   "quality_score": 8.5,
   "source": {
-    "file": "example.pptx",
+    "origin": "local | registry | override",
+    "file": "input.pptx",
     "slide": 1,
-    "extractor": "vision"
+    "extractor": "xml | vision | manual"
   }
 }
 ```
+
+### Primitive Resolution Order
+
+When generating slides, Claude selects primitives using this priority:
+
+1. **`local`** — extracted from the user's own deck this session. Always preferred.
+2. **`override`** — registry primitives the user has modified. Second priority.
+3. **`registry`** — installed from packs. Fallback.
+
+Within the same origin tier, higher `quality_score` wins.
 
 ## kpi{} — Structured KPI Data
 
