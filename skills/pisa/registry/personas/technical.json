@@ -1,0 +1,35 @@
+{
+  "persona_id": "technical",
+  "name": "Technical Review",
+  "short_description": "Architecture/sprint — diagrams first",
+  "narrative": {
+    "framework": "chronological"
+  },
+  "density": {
+    "max_words_body": 80,
+    "max_bullets": 5
+  },
+  "titles": {
+    "style": "descriptive_context"
+  },
+  "preferred_intents": [
+    "linear_process",
+    "timeline",
+    "data_table",
+    "chart_driven",
+    "comparison_columns",
+    "agenda",
+    "conclusion_cta"
+  ],
+  "discouraged_intents": [
+    "image_showcase",
+    "quote_testimonial"
+  ],
+  "visual": {
+    "ratio": "60/40",
+    "monospace_for_code": true
+  },
+  "typical_slide_count": {
+    "standard": "10-20"
+  }
+}

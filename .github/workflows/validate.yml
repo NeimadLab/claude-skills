@@ -1,0 +1,84 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  discover-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Discover and validate all skills
+        run: |
+          ERRORS=0
+
+          for skill_dir in skills/*/; do
+            SKILL_NAME=$(basename "$skill_dir")
+            echo ""
+            echo "═══ Validating skill: $SKILL_NAME ═══"
+
+            # Check SKILL.md exists
+            if [ ! -f "$skill_dir/SKILL.md" ]; then
+              echo "  ❌ Missing SKILL.md"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            echo "  ✅ SKILL.md present"
+
+            # Validate all Python files
+            find "$skill_dir" -name "*.py" | while read pyfile; do
+              if python3 -m py_compile "$pyfile" 2>/dev/null; then
+                echo "  ✅ $(basename $pyfile)"
+              else
+                echo "  ❌ $(basename $pyfile) — compilation error"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+
+            # Validate all JSON files
+            find "$skill_dir" -name "*.json" | while read jsonfile; do
+              if python3 -c "import json; json.load(open('$jsonfile'))" 2>/dev/null; then
+                echo "  ✅ $(basename $jsonfile)"
+              else
+                echo "  ❌ $(basename $jsonfile) — invalid JSON"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+
+            # Skill-specific: if registry exists, validate it
+            if [ -f "$skill_dir/registry/registry.json" ]; then
+              echo "  → Registry found, validating..."
+              python3 -c "
+          import json, os
+          os.chdir('$skill_dir/registry')
+          reg = json.load(open('registry.json'))
+          for p in reg.get('packs', []):
+              d = json.load(open(p['url']))
+              print(f\"    ✅ {p['url']}: {len(d['primitives'])} items\")
+          for t in reg.get('themes', []):
+              json.load(open(t['url']))
+              print(f\"    ✅ {t['url']}\")
+          for p in reg.get('personas', []):
+              json.load(open(p['url']))
+              print(f\"    ✅ {p['url']}\")
+          " || ERRORS=$((ERRORS + 1))
+            fi
+
+            echo "  ═══ $SKILL_NAME complete ═══"
+          done
+
+          echo ""
+          if [ $ERRORS -gt 0 ]; then
+            echo "❌ $ERRORS error(s) found"
+            exit 1
+          else
+            echo "✅ All skills valid"
+          fi

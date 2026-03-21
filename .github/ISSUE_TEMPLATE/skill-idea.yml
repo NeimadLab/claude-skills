@@ -1,0 +1,27 @@
+name: Skill Idea
+description: Propose a new Claude skill
+labels: ["enhancement", "new-skill"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Skill name
+      placeholder: "e.g., Data Explorer, Email Composer, Code Reviewer"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What would this skill do?
+      placeholder: |
+        Describe the domain expertise, workflows, inputs, outputs.
+        What can Claude do with this skill that it can't do well without it?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example conversation
+      placeholder: |
+        User: "..."
+        Claude: [activates skill, runs workflow...]

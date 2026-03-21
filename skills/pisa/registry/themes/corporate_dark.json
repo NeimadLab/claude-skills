@@ -1,0 +1,20 @@
+{
+  "token.color.primary": "0F2137",
+  "token.color.secondary": "1A5FB4",
+  "token.color.accent": "F97316",
+  "token.color.background": "111827",
+  "token.color.text": "e5e7eb",
+  "token.color.text.muted": "9ca3af",
+  "token.color.border": "374151",
+  "token.color.surface": "1f2937",
+  "token.color.success": "059669",
+  "token.color.warning": "d97706",
+  "token.color.danger": "dc2626",
+  "token.font.heading": "Arial",
+  "token.font.body": "Arial",
+  "token.size.title": 28,
+  "token.size.subtitle": 18,
+  "token.size.body": 12,
+  "token.size.label": 9,
+  "token.size.kpi": 32
+}

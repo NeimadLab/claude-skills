@@ -1,0 +1,35 @@
+{
+  "persona_id": "keynote",
+  "name": "Conference Keynote",
+  "short_description": "TED-style — story arc, no bullets",
+  "narrative": {
+    "framework": "story_arc"
+  },
+  "density": {
+    "max_words_body": 25,
+    "max_bullets": 0,
+    "max_content_shapes": 3
+  },
+  "titles": {
+    "style": "provocative"
+  },
+  "preferred_intents": [
+    "single_insight",
+    "image_showcase",
+    "quote_testimonial",
+    "section_divider",
+    "cover",
+    "thank_you"
+  ],
+  "discouraged_intents": [
+    "data_table",
+    "comparison_columns"
+  ],
+  "visual": {
+    "ratio": "90/10",
+    "dark_bg_preferred": true
+  },
+  "typical_slide_count": {
+    "standard": "20-40"
+  }
+}

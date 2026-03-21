@@ -1,0 +1,34 @@
+{
+  "persona_id": "workshop",
+  "name": "Workshop / Training",
+  "short_description": "Progressive disclosure, agenda-driven",
+  "narrative": {
+    "framework": "progressive_disclosure"
+  },
+  "density": {
+    "max_words_body": 70,
+    "max_bullets": 5
+  },
+  "titles": {
+    "style": "instructional"
+  },
+  "preferred_intents": [
+    "cover",
+    "agenda",
+    "linear_process",
+    "comparison_columns",
+    "section_divider",
+    "conclusion_cta",
+    "thank_you"
+  ],
+  "discouraged_intents": [
+    "single_insight",
+    "kpi_dashboard"
+  ],
+  "visual": {
+    "ratio": "50/50"
+  },
+  "typical_slide_count": {
+    "standard": "20-40"
+  }
+}

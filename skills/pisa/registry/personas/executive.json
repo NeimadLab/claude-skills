@@ -1,0 +1,34 @@
+{
+  "persona_id": "executive",
+  "name": "Executive Briefing",
+  "short_description": "Board / C-Suite — SCR, 4-8 slides",
+  "narrative": {
+    "framework": "scr"
+  },
+  "density": {
+    "max_words_body": 60,
+    "max_bullets": 3,
+    "max_content_shapes": 5
+  },
+  "titles": {
+    "style": "action_oriented"
+  },
+  "preferred_intents": [
+    "cover",
+    "executive_summary",
+    "kpi_dashboard",
+    "single_insight",
+    "conclusion_cta"
+  ],
+  "discouraged_intents": [
+    "data_table",
+    "org_chart"
+  ],
+  "visual": {
+    "ratio": "50/50",
+    "typography_scale": "large"
+  },
+  "typical_slide_count": {
+    "standard": "4-8"
+  }
+}

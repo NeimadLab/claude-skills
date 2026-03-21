@@ -1,0 +1,38 @@
+{
+  "persona_id": "academic",
+  "name": "Academic / Research",
+  "short_description": "Scientific method, citations required",
+  "narrative": {
+    "framework": "scientific_method"
+  },
+  "density": {
+    "max_words_body": 75,
+    "max_bullets": 5
+  },
+  "titles": {
+    "style": "findings_focused"
+  },
+  "preferred_intents": [
+    "cover",
+    "agenda",
+    "linear_process",
+    "data_table",
+    "chart_driven",
+    "comparison_columns",
+    "conclusion_cta",
+    "thank_you"
+  ],
+  "discouraged_intents": [
+    "image_showcase",
+    "quote_testimonial",
+    "funnel"
+  ],
+  "visual": {
+    "ratio": "60/40",
+    "citations_required": true
+  },
+  "typical_slide_count": {
+    "conference": "12-20",
+    "thesis": "40-60"
+  }
+}

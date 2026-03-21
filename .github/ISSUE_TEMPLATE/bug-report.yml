@@ -1,0 +1,25 @@
+name: Bug Report
+description: Something isn't working correctly
+labels: ["bug"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Which skill?
+      placeholder: "e.g., pisa, or 'general' for repo-level issues"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should have happened?
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce

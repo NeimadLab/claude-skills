@@ -1,0 +1,35 @@
+{
+  "persona_id": "startup",
+  "name": "Startup Pitch Deck",
+  "short_description": "Seed/Series A — Problem-Solution-Ask",
+  "narrative": {
+    "framework": "problem_solution_ask"
+  },
+  "density": {
+    "max_words_body": 50,
+    "max_bullets": 4
+  },
+  "titles": {
+    "style": "direct_value"
+  },
+  "preferred_intents": [
+    "cover",
+    "single_insight",
+    "kpi_dashboard",
+    "comparison_columns",
+    "chart_driven",
+    "funnel",
+    "conclusion_cta",
+    "thank_you"
+  ],
+  "discouraged_intents": [
+    "data_table",
+    "org_chart"
+  ],
+  "visual": {
+    "ratio": "60/40"
+  },
+  "typical_slide_count": {
+    "standard": "10-15"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "persona_id": "sales",
+  "name": "Sales & Marketing",
+  "short_description": "Pitch/proposal — benefit-led, CTA",
+  "narrative": {
+    "framework": "problem_proof_cta"
+  },
+  "density": {
+    "max_words_body": 65,
+    "max_bullets": 5
+  },
+  "titles": {
+    "style": "benefit_led"
+  },
+  "preferred_intents": [
+    "cover",
+    "single_insight",
+    "comparison_columns",
+    "kpi_dashboard",
+    "funnel",
+    "quote_testimonial",
+    "before_after",
+    "conclusion_cta",
+    "thank_you"
+  ],
+  "discouraged_intents": [
+    "data_table",
+    "matrix_2x2"
+  ],
+  "visual": {
+    "ratio": "50/50"
+  },
+  "typical_slide_count": {
+    "standard": "10-20"
+  }
+}

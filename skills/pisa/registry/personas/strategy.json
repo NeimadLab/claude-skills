@@ -1,0 +1,42 @@
+{
+  "persona_id": "strategy",
+  "name": "Strategy Consulting",
+  "short_description": "McKinsey/BCG — data-rich, Pyramid, MECE",
+  "narrative": {
+    "framework": "pyramid",
+    "required_sections": [
+      "cover",
+      "executive_summary",
+      "body",
+      "conclusion"
+    ]
+  },
+  "density": {
+    "max_words_body": 90,
+    "max_bullets": 5,
+    "max_content_shapes": 7
+  },
+  "titles": {
+    "style": "assertive_insight"
+  },
+  "preferred_intents": [
+    "executive_summary",
+    "kpi_dashboard",
+    "comparison_columns",
+    "data_table",
+    "chart_driven",
+    "matrix_2x2",
+    "linear_process",
+    "conclusion_cta"
+  ],
+  "discouraged_intents": [
+    "image_showcase",
+    "quote_testimonial"
+  ],
+  "visual": {
+    "ratio": "70/30 data"
+  },
+  "typical_slide_count": {
+    "standard": "30-50"
+  }
+}
