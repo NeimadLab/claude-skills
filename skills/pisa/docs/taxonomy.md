@@ -1,6 +1,6 @@
 # Slide Taxonomy — 21 Canonical Intents
 
-Every slide maps to one of 21 intents. This classification drives canvas selection, density enforcement, and layout expectations.
+Every slide maps to one of 21 intents. This classification drives primitive selection, density enforcement, and layout expectations.
 
 | # | Intent | Purpose | Typical Components |
 |---|--------|---------|-------------------|

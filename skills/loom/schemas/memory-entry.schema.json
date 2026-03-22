@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loom Memory Entry",
+  "description": "Schema for entries in .loom/memory.db",
+  "type": "object",
+  "required": ["id", "type", "status", "content", "timestamp"],
+  "properties": {
+    "id": { "type": "string", "description": "ULID-like sortable unique ID" },
+    "type": {
+      "type": "string",
+      "enum": ["decision", "artifact", "goal", "risk", "note", "observation"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["hypothesis", "validated", "obsolete", "rejected"]
+    },
+    "content": { "type": "string" },
+    "rationale": { "type": ["string", "null"] },
+    "actor": { "type": ["string", "null"] },
+    "session_id": { "type": ["string", "null"] },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "linked_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "linked_commits": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

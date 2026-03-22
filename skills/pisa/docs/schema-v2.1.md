@@ -1,8 +1,8 @@
-# Schema V2.1 — Canvas JSON Format
+# Schema V2.1 — Primitive JSON Format
 
 ## Overview
 
-Every slide decomposes into a canvas: a JSON object that captures what the slide **is**, not how it **looks**.
+Every slide decomposes into a primitive: a JSON object that captures what the slide **is**, not how it **looks**.
 
 V2.1 added three component-level extensions that improved reproduction fidelity from 50% to 85% in testing:
 
@@ -11,9 +11,9 @@ V2.1 added three component-level extensions that improved reproduction fidelity 
 - **`content_data{}`** — structured body content (timelines, org charts, checklists)
 - **`zones[]`** — compound slides with multiple intents
 
-All new fields are optional. V2.0 canvases remain valid V2.1 canvases.
+All new fields are optional. V2.0 primitives remain valid V2.1 primitives.
 
-## Complete Canvas Structure
+## Complete Primitive Structure
 
 ```json
 {
@@ -30,23 +30,12 @@ All new fields are optional. V2.0 canvases remain valid V2.1 canvases.
   "reading_order": [0, 1, 2, 3],
   "quality_score": 8.5,
   "source": {
-    "origin": "local | registry | override",
-    "file": "input.pptx",
+    "file": "example.pptx",
     "slide": 1,
-    "extractor": "xml | vision | manual"
+    "extractor": "vision"
   }
 }
 ```
-
-### Canvas Resolution Order
-
-When generating slides, Claude selects canvases using this priority:
-
-1. **`local`** — extracted from the user's own deck this session. Always preferred.
-2. **`override`** — registry canvases the user has modified. Second priority.
-3. **`registry`** — installed from packs. Fallback.
-
-Within the same origin tier, higher `quality_score` wins.
 
 ## kpi{} — Structured KPI Data
 
