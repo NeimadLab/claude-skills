@@ -43,7 +43,7 @@ There is nothing to install on your machine. No plugins, no API keys, no contain
 | Skill | Description | Status |
 |-------|-------------|:------:|
 | **[PISA](skills/pisa/)** | Presentation Intelligence & Slide Architecture — analyze, generate, retheme, and review professional PowerPoint decks | ✅ v1.0 |
-| **[Loom](skills/loom/)** | Persistent AI workspace memory — search decisions, log context, generate handoff summaries, and maintain project continuity across sessions and models | ✅ v0.3.0 |
+| **[Loom](skills/loom/)** | Persistent AI workspace memory — search decisions, log context, generate handoff summaries, and maintain project continuity across sessions and models | ✅ v0.4.0 |
 
 > More skills coming. [Suggest one →](../../discussions)
 

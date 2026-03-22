@@ -35,11 +35,17 @@ def _get_api_key() -> str | None:
     return os.environ.get("LOOM_API_KEY")
 
 
+_auth_warned = False
+
+
 def _authenticate(request) -> bool:
     """Validate Bearer token from request headers."""
+    global _auth_warned  # noqa: PLW0603
     expected = _get_api_key()
     if not expected:
-        logger.warning("LOOM_API_KEY not set — gateway is unauthenticated!")
+        if not _auth_warned:
+            logger.warning("LOOM_API_KEY not set — gateway is unauthenticated!")
+            _auth_warned = True
         return True  # No key = open access (dev mode)
 
     auth = request.headers.get("authorization", "")
@@ -89,7 +95,7 @@ def create_app(workspace: Path | None = None):
     # ── REST endpoints (for ChatGPT Custom GPTs etc.) ───────
     async def health(request: Request) -> JSONResponse:
         """Health check endpoint."""
-        return JSONResponse({"status": "ok", "version": "0.3.0"})
+        return JSONResponse({"status": "ok", "version": "0.4.0"})
 
     async def api_search(request: Request) -> JSONResponse:
         """Search project memory."""
@@ -178,7 +184,7 @@ def create_app(workspace: Path | None = None):
                 result = {
                     "protocolVersion": "2024-11-05",
                     "capabilities": {"tools": {}},
-                    "serverInfo": {"name": "loom", "version": "0.3.0"},
+                    "serverInfo": {"name": "loom", "version": "0.4.0"},
                 }
             elif method == "tools/list":
                 from loom.mcp_server import TOOLS

@@ -7,7 +7,7 @@
 *A loom weaves separate threads into one fabric — Loom weaves your AI workspace context into one persistent, inspectable, transferable substrate.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Phase](https://img.shields.io/badge/Phase-0.3_Hardening-E74C3C.svg)](ROADMAP.md)
+[![Phase](https://img.shields.io/badge/Phase-0.4_Adoptable-9B59B6.svg)](ROADMAP.md)
 [![MCP](https://img.shields.io/badge/Protocol-MCP-8B5CF6.svg)](docs/gateway-model.md)
 
 [Problem](#the-problem) · [Solution](#the-solution) · [Quick Start](#quick-start) · [Architecture](docs/architecture.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
@@ -61,7 +61,7 @@ Loom is the workspace layer that makes AI-assisted development **persistent**, *
 ## Quick Start
 
 ```bash
-# Install from source (v0.3.0)
+# Install from source (v0.4.0)
 git clone https://github.com/NeimadLab/loom.git
 cd loom
 pip install -e .
@@ -193,12 +193,14 @@ See [`examples/python-project/`](examples/python-project/) for a full initialize
 
 | Phase | Name | Status |
 |-------|------|:------:|
-| **V0.1** | [Foundations](docs/product-evolution.md#v01--foundations) — Resume + Memory + Doctor | ✅ Done |
-| **V0.2** | Sequential Handoff — sessions, tokens, import/export, gateway | ✅ Done |
+| **V0.1** | Foundations — resume, memory, doctor, CLI | ✅ Done |
+| **V0.2** | Handoff — sessions, tokens, import/export, gateway | ✅ Done |
 | **V0.3** | Hardening — policy engine, recovery, decay, benchmarks | ✅ Done |
-| **V1.0** | [Stable Substrate](docs/product-evolution.md#v10--stable-technical-substrate) — Contracts, PyPI, hybrid topology | ⬜ Planned |
-| **V2.0** | [Parallel Tracks](docs/product-evolution.md#v20--parallel-work-streams) — Multi-agent via Git worktrees | ⬜ Future |
-| **V3.0** | [Orchestrated Intelligence](docs/product-evolution.md#v30--coordinated-actor-ecosystem) — Role-based actor coordination | ⬜ Future |
+| **V0.4** | Adoptable — interactive init, templates, status, team, multi-workspace | ✅ Done |
+| **V0.4** | Adoptable — interactive init, templates, status, team mode | ✅ Done |
+| **V0.5** | Indispensable — semantic search, session diff, smart handoff | ⬜ Next |
+| **V1.0** | Stable — contracts, PyPI, hybrid topology, OAuth | ⬜ Planned |
+| **V2.0** | Platform — PostgreSQL, parallel tracks, MCP Hub | ⬜ Future |
 
 Full details → [ROADMAP.md](ROADMAP.md) · Product evolution → [docs/product-evolution.md](docs/product-evolution.md)
 

@@ -40,7 +40,7 @@ class TestWorkspaceLifecycle:
     def test_init_creates_workspace(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\nname = 'test'\n")
 
-        r = loom("init", cwd=tmp_path)
+        r = loom("init", "--non-interactive", cwd=tmp_path)
         assert "Workspace initialized" in r.stdout
         assert (tmp_path / ".loom").is_dir()
         assert (tmp_path / ".loom" / "memory.db").exists()
@@ -49,47 +49,47 @@ class TestWorkspaceLifecycle:
     def test_init_detects_python(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\nname = 'test'\n")
 
-        r = loom("init", cwd=tmp_path)
+        r = loom("init", "--non-interactive", cwd=tmp_path)
         assert "python" in r.stdout.lower()
 
     def test_init_detects_node(self, tmp_path):
         (tmp_path / "package.json").write_text('{"name": "test"}')
 
-        r = loom("init", cwd=tmp_path)
+        r = loom("init", "--non-interactive", cwd=tmp_path)
         assert "node" in r.stdout.lower()
 
     def test_init_adds_gitignore(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
         (tmp_path / ".gitignore").write_text("*.pyc\n")
 
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         content = (tmp_path / ".gitignore").read_text()
         assert ".loom/" in content
 
     def test_init_force_reinitializes(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
-        loom("init", "--force", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
+        loom("init", "--non-interactive", "--force", cwd=tmp_path)
 
         assert (tmp_path / ".loom" / "memory.db").exists()
 
     def test_state_shows_info(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
 
         r = loom("state", cwd=tmp_path)
         assert "python" in r.stdout.lower()
 
     def test_resume_no_drift(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
 
         r = loom("resume", cwd=tmp_path)
         assert "no drift" in r.stdout.lower()
 
     def test_doctor_healthy(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
 
         r = loom("doctor", cwd=tmp_path)
         assert "passed" in r.stdout.lower() or "✓" in r.stdout
@@ -112,7 +112,7 @@ class TestMemoryOperations:
     @pytest.fixture(autouse=True)
     def workspace(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         self.ws = tmp_path
 
     def test_log_decision(self):
@@ -160,7 +160,7 @@ class TestImportExport:
     @pytest.fixture(autouse=True)
     def workspace(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         self.ws = tmp_path
 
     def test_import_claude_md(self):
@@ -214,7 +214,7 @@ class TestJsonOutput:
     @pytest.fixture(autouse=True)
     def workspace(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         loom("log", "Test decision", cwd=tmp_path)
         self.ws = tmp_path
 
@@ -265,7 +265,7 @@ class TestConnect:
     @pytest.fixture(autouse=True)
     def workspace(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         self.ws = tmp_path
 
     def test_connect_claude_code(self, tmp_path):
@@ -297,7 +297,7 @@ class TestEvents:
 
     def test_events_after_operations(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         loom("log", "A decision", cwd=tmp_path)
 
         r = loom("events", "--json", cwd=tmp_path)
@@ -308,7 +308,7 @@ class TestEvents:
 
     def test_events_count_flag(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         for i in range(5):
             loom("log", f"Decision {i}", cwd=tmp_path)
 

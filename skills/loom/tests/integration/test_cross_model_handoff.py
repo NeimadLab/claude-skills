@@ -38,7 +38,7 @@ class TestCrossModelHandoff:
     def workspace(self, tmp_path):
         (tmp_path / "pyproject.toml").write_text("[project]\nname='handoff-test'\n")
         (tmp_path / "requirements.txt").write_text("fastapi\nuvicorn\n")
-        loom("init", cwd=tmp_path)
+        loom("init", "--non-interactive", cwd=tmp_path)
         self.ws = tmp_path
 
     def test_full_handoff_scenario(self):

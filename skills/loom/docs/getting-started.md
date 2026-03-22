@@ -27,7 +27,7 @@ Verify the installation:
 
 ```bash
 loom --version
-# loom, version 0.3.0
+# loom, version 0.4.0
 ```
 
 ## Step 2: Initialize Your Project
@@ -66,7 +66,7 @@ For tool-specific details, see:
 - [Connect Windsurf](connect-windsurf.md)
 - [Connect Claude Desktop](connect-claude-desktop.md)
 - [Connect Claude.ai (remote)](setup-cloud.md)
-- [Connect ChatGPT (remote)](connect-chatgpt.md)
+- [Connect ChatGPT (remote)](setup-cloud.md#chatgpt-custom-gpt-with-actions)
 
 ## Step 4: Use Loom
 

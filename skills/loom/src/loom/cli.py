@@ -32,6 +32,21 @@ def _require_workspace() -> Path:
     return root
 
 
+def _get_active_actor(workspace: Path) -> str:
+    """Get the actor name from the active session, or 'cli' if no session."""
+    try:
+        from loom.sessions import SessionStore
+
+        store = SessionStore(workspace)
+        active = store.get_active()
+        store.close()
+        if active:
+            return active["actor"]
+    except Exception:
+        pass
+    return "cli"
+
+
 @click.group()
 @click.version_option(__version__, prog_name="loom")
 def main():
@@ -41,7 +56,14 @@ def main():
 
 @main.command()
 @click.option("--force", is_flag=True, help="Reinitialize even if .loom/ exists")
-def init(force: bool):
+@click.option(
+    "--template", "-t", default=None, help="Apply a domain template (web-backend, cli-tool, etc.)"
+)
+@click.option(
+    "--connect", "-c", default=None, help="Auto-connect an AI tool (claude-code, cursor, windsurf)"
+)
+@click.option("--non-interactive", is_flag=True, help="Skip interactive prompts")
+def init(force: bool, template: str | None, connect: str | None, non_interactive: bool):
     """Initialize Loom workspace in the current directory."""
     root = Path.cwd()
     ld = loom_dir(root)
@@ -70,7 +92,7 @@ def init(force: bool):
     store.close()
     console.print("Memory database created.")
 
-    # Add .loom/ to .gitignore if not already there
+    # Add .loom/ to .gitignore
     gitignore = root / ".gitignore"
     if gitignore.exists():
         content = gitignore.read_text()
@@ -88,20 +110,133 @@ def init(force: bool):
         root,
     )
 
+    # ── Template ────────────────────────────────────────────
+    if template:
+        from loom.templates import apply_template
+
+        result = apply_template(template, root)
+        if "error" in result:
+            console.print(f"[red]{result['error']}[/]")
+        else:
+            console.print(
+                f"[green]\u2713 Template applied:[/] {template} ({result['entries_added']} entries)"
+            )
+    elif not non_interactive:
+        # Interactive: offer templates
+        from loom.templates import list_templates
+
+        templates = list_templates()
+        console.print("\n[bold]Available templates:[/]")
+        for i, t in enumerate(templates, 1):
+            console.print(f"  {i}. {t['name']:20s} {t['description']}")
+        console.print("  0. Skip (no template)")
+
+        choice = click.prompt("Apply a template?", type=int, default=0, show_default=True)
+        if 1 <= choice <= len(templates):
+            from loom.templates import apply_template
+
+            result = apply_template(templates[choice - 1]["name"], root)
+            console.print(
+                f"[green]\u2713 Template applied:[/] {templates[choice - 1]['name']} "
+                f"({result['entries_added']} entries)"
+            )
+
+    # ── Auto-import CLAUDE.md if present ────────────────────
+    claude_md = root / "CLAUDE.md"
+    if claude_md.exists() and (
+        non_interactive or click.confirm("Found CLAUDE.md — import into Loom memory?", default=True)
+    ):
+        from loom.import_export import import_claude_md
+
+        result = import_claude_md(claude_md, root)
+        console.print(f"[green]\u2713 Imported {result['imported']} entries[/] from CLAUDE.md")
+
+    # ── Auto-import .cursorrules if present ──────────────────
+    cursorrules = root / ".cursorrules"
+    if cursorrules.exists() and (
+        non_interactive
+        or click.confirm("Found .cursorrules — import into Loom memory?", default=True)
+    ):
+        from loom.import_export import import_cursorrules
+
+        result = import_cursorrules(cursorrules, root)
+        console.print(f"[green]\u2713 Imported {result['imported']} entries[/] from .cursorrules")
+
+    # ── Connect AI tool ─────────────────────────────────────
+    tool_to_connect = connect
+    if not tool_to_connect and not non_interactive:
+        tools = ["claude-code", "cursor", "windsurf", "skip"]
+        console.print("\n[bold]Connect an AI tool:[/]")
+        for i, t in enumerate(tools, 1):
+            console.print(f"  {i}. {t}")
+
+        choice = click.prompt("Connect?", type=int, default=1, show_default=True)
+        if 1 <= choice <= len(tools) - 1:
+            tool_to_connect = tools[choice - 1]
+
+    if tool_to_connect and tool_to_connect != "skip":
+        _do_connect(root, tool_to_connect)
+
+    # ── Summary ─────────────────────────────────────────────
+    from loom.memory import MemoryStore
+
+    s = MemoryStore(root)
+    mem_count = s.count()
+    s.close()
+
     console.print(
         Panel(
             "[bold green]\u2713 Workspace initialized[/]\n\n"
-            f"  Project type:  {ptype or 'generic'}\n"
-            f"  Identity:      {identity.identity_hash}\n"
-            f"  .loom/ created: {ld}\n\n"
-            "Next steps:\n"
-            "  [dim]loom connect claude-code[/]  \u2014 connect your AI tool\n"
-            "  [dim]loom state[/]               \u2014 inspect workspace\n"
-            "  [dim]loom doctor[/]              \u2014 run health checks",
+            f"  Project type:    {ptype or 'generic'}\n"
+            f"  Identity:        {identity.identity_hash}\n"
+            f"  Memory entries:  {mem_count}\n"
+            f"  .loom/ created:  {ld}\n"
+            + (
+                f"\n  Connected to:    [cyan]{tool_to_connect}[/]"
+                if tool_to_connect and tool_to_connect != "skip"
+                else ""
+            ),
             title="Loom",
             border_style="green",
         )
     )
+
+
+def _do_connect(root: Path, client: str, remote: str | None = None):
+    """Internal helper to connect an AI tool (shared by init and connect commands)."""
+    config = MCP_CLIENT_CONFIGS.get(client)
+    if not config:
+        console.print(f"[red]Unknown client: {client}[/]")
+        return
+
+    if remote:
+        mcp_entry = {
+            "type": "sse",
+            "url": remote.rstrip("/") + "/mcp",
+            "headers": {"Authorization": "Bearer YOUR_API_KEY"},
+        }
+    else:
+        mcp_entry = {"command": "loom", "args": ["mcp", "serve"]}
+
+    config_path = None
+    for candidate in config["path_candidates"]:
+        p = Path(candidate).expanduser()
+        if p.exists():
+            config_path = p
+            break
+    if config_path is None:
+        config_path = Path(config["path_candidates"][0]).expanduser()
+
+    existing = json.loads(config_path.read_text()) if config_path.exists() else {}
+    servers = existing.get(config["key"], {})
+    servers["loom"] = mcp_entry
+    existing[config["key"]] = servers
+
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(json.dumps(existing, indent=2) + "\n")
+
+    transport = "SSE (remote)" if remote else "stdio (local)"
+    console.print(f"  [green]\u2713[/] {client} configured ({transport})")
 
 
 @main.command()
@@ -249,17 +384,29 @@ def state(as_json: bool):
     default=None,
     help="Filter: hypothesis|validated|obsolete|rejected",
 )
+@click.option("-a", "--actor", "actor_filter", default=None, help="Filter by actor name")
 @click.option("-n", "--limit", default=10, help="Max results")
 @click.option("--json", "as_json", is_flag=True, help="Output as JSON")
 def search(
-    query: str, type_filter: str | None, status_filter: str | None, limit: int, as_json: bool
+    query: str,
+    type_filter: str | None,
+    status_filter: str | None,
+    actor_filter: str | None,
+    limit: int,
+    as_json: bool,
 ):
     """Search project memory."""
     root = _require_workspace()
     from loom.memory import MemoryStore
 
     store = MemoryStore(root)
-    results = store.search(query, limit=limit, type_filter=type_filter, status_filter=status_filter)
+    results = store.search(
+        query,
+        limit=limit,
+        type_filter=type_filter,
+        status_filter=status_filter,
+        actor_filter=actor_filter,
+    )
     store.close()
 
     if as_json:
@@ -309,6 +456,7 @@ def log(decision: str, rationale: str, tags: str):
     from loom.memory import MemoryStore
     from loom.models import MemoryEntry, MemoryType
 
+    actor = _get_active_actor(root)
     store = MemoryStore(root)
     tag_list = [t.strip() for t in tags.split(",") if t.strip()] if tags else []
     entry = MemoryEntry(
@@ -316,13 +464,13 @@ def log(decision: str, rationale: str, tags: str):
         content=decision,
         rationale=rationale or None,
         tags=tag_list,
-        actor="cli",
+        actor=actor,
     )
     store.write(entry)
     store.close()
 
     emit(
-        Event(event_type="decision_logged", actor="cli", data={"entry_id": entry.id}),
+        Event(event_type="decision_logged", actor=actor, data={"entry_id": entry.id}),
         root,
     )
     console.print(f"[green]\u2713 Decision logged:[/] {decision[:60]}")
@@ -382,48 +530,139 @@ def events(n: int, as_json: bool):
 @click.option("--remote", default=None, help="Remote Loom server URL")
 def connect(client: str, remote: str | None):
     """Generate and install MCP configuration for an AI tool."""
-    config = MCP_CLIENT_CONFIGS.get(client)
-    if not config:
-        console.print(f"[red]Unknown client: {client}[/]")
-        sys.exit(1)
+    root = Path.cwd()
+    _do_connect(root, client, remote)
+    console.print(f"\n  Restart [bold]{client}[/] to activate the connection.")
 
-    if remote:
-        mcp_entry = {
-            "type": "sse",
-            "url": remote.rstrip("/") + "/mcp",
-            "headers": {"Authorization": "Bearer YOUR_API_KEY"},
-        }
-    else:
-        mcp_entry = {"command": "loom", "args": ["mcp", "serve"]}
 
-    config_path = None
-    for candidate in config["path_candidates"]:
-        p = Path(candidate).expanduser()
-        if p.exists():
-            config_path = p
-            break
-    if config_path is None:
-        config_path = Path(config["path_candidates"][0]).expanduser()
+# ────────────────────────────────────────────
+# loom status (the one-liner)
+# ────────────────────────────────────────────
 
-    existing = json.loads(config_path.read_text()) if config_path.exists() else {}
-    servers = existing.get(config["key"], {})
-    servers["loom"] = mcp_entry
-    existing[config["key"]] = servers
 
-    config_path.parent.mkdir(parents=True, exist_ok=True)
-    config_path.write_text(json.dumps(existing, indent=2) + "\n")
+@main.command()
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def status(as_json: bool):
+    """One-liner workspace overview: state + doctor + session + token."""
+    root = _require_workspace()
 
-    transport = "SSE (remote)" if remote else "stdio (local)"
+    ws_state = get_workspace_state(root)
+
+    from loom import write_token
+    from loom.sessions import SessionStore
+
+    tok = write_token.status(root)
+
+    try:
+        ss = SessionStore(root)
+        active_session = ss.get_active()
+        session_count = len(ss.list_sessions(100))
+        ss.close()
+    except Exception:
+        active_session = None
+        session_count = 0
+
+    result = doctor_check()
+
+    from loom.team import is_team_mode
+
+    team = is_team_mode(root)
+
+    if as_json:
+        click.echo(
+            json.dumps(
+                {
+                    "state": ws_state,
+                    "doctor": result,
+                    "session": {
+                        "active": active_session,
+                        "total": session_count,
+                    },
+                    "write_token": tok,
+                    "team_mode": team,
+                },
+                indent=2,
+                default=str,
+            )
+        )
+        return
+
+    # Compact one-screen summary
+    healthy = result["healthy"]
+    health_icon = "[green]\u2713[/]" if healthy else "[red]\u2717[/]"
+    health_detail = f"{sum(1 for c in result['checks'] if c['ok'])}/{len(result['checks'])} checks"
+
+    session_text = (
+        f"[green]{active_session['actor']}[/] ({active_session.get('model_name', '?')})"
+        if active_session
+        else "[dim]none[/]"
+    )
+
+    token_text = (
+        f"[yellow]held by {tok['actor']}[/] ({tok.get('remaining_seconds', 0)}s)"
+        if tok.get("held")
+        else "[green]free[/]"
+    )
+
+    mode_text = "[cyan]team[/]" if team else "solo"
+
     console.print(
         Panel(
-            f"[bold green]\u2713 {client} configured for Loom[/]\n\n"
-            f"  Config: {config_path}\n"
-            f"  Transport: {transport}\n\n"
-            f"Restart {client} to activate the connection.",
-            title="Loom Connect",
-            border_style="green",
+            f"  Project:   [cyan]{ws_state.get('project_type', '?')}[/]  "
+            f"  Identity: [dim]{(ws_state.get('runtime_identity') or '?')[:12]}[/]  "
+            f"  Branch: {ws_state.get('git_branch') or 'N/A'}\n"
+            f"  Health:    {health_icon} {health_detail}  "
+            f"  Memory: [bold]{ws_state.get('memory_entries', 0)}[/] entries  "
+            f"  Events: {ws_state.get('event_count', 0)}\n"
+            f"  Session:   {session_text}  "
+            f"  Token: {token_text}  "
+            f"  Mode: {mode_text}"
+            + (f"  Sessions: {session_count} total" if session_count > 0 else ""),
+            title="Loom Status",
+            border_style="blue",
         )
     )
+
+
+# ────────────────────────────────────────────
+# loom templates
+# ────────────────────────────────────────────
+
+
+@main.group(name="templates")
+def templates_group():
+    """Project templates for domain-specific onboarding."""
+    pass
+
+
+@templates_group.command(name="list")
+def templates_list():
+    """List available project templates."""
+    from loom.templates import list_templates
+
+    templates = list_templates()
+    table = Table(title="Available Templates", show_header=True)
+    table.add_column("Name", style="cyan")
+    table.add_column("Description")
+    table.add_column("Entries", justify="right")
+
+    for t in templates:
+        table.add_row(t["name"], t["description"], str(t["entries"]))
+    console.print(table)
+
+
+@templates_group.command(name="apply")
+@click.argument("name")
+def templates_apply(name: str):
+    """Apply a template to the current workspace."""
+    root = _require_workspace()
+    from loom.templates import apply_template
+
+    result = apply_template(name, root)
+    if "error" in result:
+        console.print(f"[red]{result['error']}[/]")
+        return
+    console.print(f"[green]\u2713 Template applied:[/] {name} ({result['entries_added']} entries)")
 
 
 # ────────────────────────────────────────────

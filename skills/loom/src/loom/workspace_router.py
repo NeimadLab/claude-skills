@@ -181,7 +181,7 @@ def create_multi_workspace_app(config_dir: Path | None = None):
         return JSONResponse(
             {
                 "status": "ok",
-                "version": "0.3.0",
+                "version": "0.4.0",
                 "mode": "multi-workspace",
                 "workspaces": len(workspaces),
                 "healthy": sum(1 for w in workspaces if w["healthy"]),

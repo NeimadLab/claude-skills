@@ -94,9 +94,9 @@ def doctor_check(workspace: Path | None = None) -> dict:
 
     checks = []
 
-    def check(name: str, ok: bool, detail: str = ""):
+    def check(name: str, ok: bool, detail: str = "", optional: bool = False):
         """Append a health check result."""
-        checks.append({"name": name, "ok": ok, "detail": detail})
+        checks.append({"name": name, "ok": ok, "detail": detail, "optional": optional})
 
     # .loom/ exists
     check(
@@ -136,25 +136,42 @@ def doctor_check(workspace: Path | None = None) -> dict:
     else:
         check("Runtime identity", False, "No stored identity")
 
-    # Git
+    # Git (optional)
     try:
         r = subprocess.run(["git", "status"], capture_output=True, cwd=root)
         check(
-            "Git repository", r.returncode == 0, "Clean" if r.returncode == 0 else "Not a git repo"
+            "Git repository",
+            r.returncode == 0,
+            "Clean" if r.returncode == 0 else "Not a git repo",
+            optional=True,
         )
     except FileNotFoundError:
-        check("Git repository", False, "Git not installed")
+        check("Git repository", False, "Git not installed", optional=True)
 
-    # Docker
+    # Docker (optional)
     try:
         r = subprocess.run(["docker", "info"], capture_output=True)
-        check("Docker", r.returncode == 0, "Running" if r.returncode == 0 else "Not running")
+        check(
+            "Docker",
+            r.returncode == 0,
+            "Running" if r.returncode == 0 else "Not running",
+            optional=True,
+        )
     except FileNotFoundError:
-        check("Docker", False, "Not installed (optional)")
+        check("Docker", False, "Not installed", optional=True)
 
-    healthy = all(c["ok"] for c in checks[:4])  # First 4 are critical
+    required = [c for c in checks if not c.get("optional")]
+    healthy = all(c["ok"] for c in required)
+    required_pass = sum(c["ok"] for c in required)
+    optional_pass = sum(c["ok"] for c in checks if c.get("optional"))
+    optional_total = sum(1 for c in checks if c.get("optional"))
+
+    summary = f"{required_pass}/{len(required)} required checks passed"
+    if optional_total > 0:
+        summary += f", {optional_pass}/{optional_total} optional"
+
     return {
         "healthy": healthy,
         "checks": checks,
-        "summary": f"{sum(c['ok'] for c in checks)}/{len(checks)} checks passed",
+        "summary": summary,
     }

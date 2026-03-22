@@ -128,8 +128,9 @@ class MemoryStore:
         limit: int = 10,
         type_filter: str | None = None,
         status_filter: str | None = None,
+        actor_filter: str | None = None,
     ) -> list[dict]:
-        """Full-text search with optional type and status filters.
+        """Full-text search with optional type, status, and actor filters.
 
         Handles special characters safely by sanitizing the FTS5 query.
         Falls back to LIKE search if FTS5 query is empty after sanitization.
@@ -153,6 +154,9 @@ class MemoryStore:
         if status_filter:
             sql += " AND m.status = ?"
             params.append(status_filter)
+        if actor_filter:
+            sql += " AND m.actor = ?"
+            params.append(actor_filter)
 
         sql += " ORDER BY m.timestamp DESC LIMIT ?"
         params.append(limit)
@@ -169,6 +173,9 @@ class MemoryStore:
             if status_filter:
                 sql += " AND m.status = ?"
                 params.append(status_filter)
+            if actor_filter:
+                sql += " AND m.actor = ?"
+                params.append(actor_filter)
             sql += " ORDER BY m.timestamp DESC LIMIT ?"
             params.append(limit)
             rows = self.conn.execute(sql, params).fetchall()

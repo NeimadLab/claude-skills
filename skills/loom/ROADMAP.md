@@ -2,59 +2,59 @@
 
 ## Done (V0.1 — Foundations)
 
-- [x] `loom init` — workspace initialization with project type detection
-- [x] `loom resume` — verify identity, restore Docker cache volumes
-- [x] `loom doctor` — 7-check health diagnostics
-- [x] `loom connect` — auto-configure MCP for Claude Code, Cursor, Windsurf
-- [x] `loom state` / `loom search` / `loom log` / `loom events` — CLI
-- [x] MCP memory server (SQLite + FTS5) via stdio — 6 tools
-- [x] Append-only event log (JSONL), runtime identity, DevContainer template
-- [x] `--json` flag on all data commands, integration tests (28 E2E)
+- [x] CLI: init, resume, doctor, state, connect, search, log, events, mcp serve
+- [x] MCP server (6 tools), SQLite+FTS5, event log, runtime identity
+- [x] `--json` flag, integration tests (28 E2E)
 
 ## Done (V0.2 — Sequential Handoff)
 
-- [x] Session/actor model: open, close, list, cleanup
-- [x] Write token: lease-based single-writer exclusion
-- [x] Import/export: CLAUDE.md, .cursorrules, markdown
-- [x] Promote/reject: hypothesis → validated / rejected
-- [x] `loom context` CLI with --json and --save
-- [x] Remote gateway (SSE/HTTP) with REST API and Bearer auth
-- [x] MCP tools: loom_open_session, loom_close_session (8 total)
+- [x] Sessions, write token, import/export, promote/reject, context CLI
+- [x] Remote gateway (SSE/HTTP + REST + Bearer auth), MCP expanded to 8 tools
 - [x] Cross-model handoff E2E test (Claude Code → Cursor → Windsurf)
 
 ## Done (V0.3 — Hardening)
 
-- [x] Policy engine: YAML rules evaluated on every gateway tool call
-- [x] Crash recovery: integrity check (7 checks), auto-repair, FTS5 rebuild
-- [x] State rebuild: reconstruct memory.db from events.jsonl
-- [x] Memory decay: auto-obsolete unvalidated hypothesis entries past TTL
-- [x] Benchmark suite: init, write, search (p50/p95/p99), handoff, events
-- [x] Dockerfile tested with gateway entrypoint + docker-compose with healthcheck
+- [x] Policy engine, crash recovery, state rebuild, memory decay
+- [x] Benchmark suite, Dockerfile with gateway entrypoint
 
-## Next (V1.0 — The Workspace Standard)
+## Done (V0.4 — Adoptable)
 
-- [ ] Contract tests for all MCP tools (schema validation, breaking change detection)
-- [ ] Compatibility matrix (Linux, macOS, Windows × Python 3.11–3.13)
+- [x] Interactive `loom init` (template + auto-import + auto-connect)
+- [x] 7 project templates (web-backend, frontend, mobile, data, cli, infra, library)
+- [x] `loom status` one-liner (state+doctor+session+token+team)
+- [x] Team mode: multi-user auth with roles (admin/member/viewer)
+- [x] Multi-workspace router with per-project URL routing
+- [x] PyPI-ready pyproject.toml + GitHub Action for publishing
+
+## Next (V0.5 — Indispensable)
+
+- [ ] Semantic search (embeddings complement to FTS5)
+- [ ] `loom diff` between sessions (what changed since last handoff?)
+- [ ] Smart handoff (contextualized summary, not raw dump)
+- [ ] Memory hooks / webhooks (Slack notification on risk, email on promote)
+- [ ] `loom watch` daemon (live workspace monitoring)
+
+## Later (V1.0 — The Workspace Standard)
+
+- [ ] Contract tests for all 8 MCP tools
+- [ ] Compatibility matrix (Linux, macOS, Windows × Python 3.11-3.13)
 - [ ] PyPI publication (`pip install loom`)
 - [ ] Hybrid topology (local runtime + remote memory sync)
-- [ ] OAuth authentication (beyond API keys)
-- [ ] Rate limiting on gateway endpoints
-- [ ] Reference demos published in CI
+- [ ] OAuth2 authentication
 
 ## Future (V2.0–V3.0)
 
+- [ ] PostgreSQL backend (>20 concurrent users)
 - [ ] Git worktree-based parallel tracks
 - [ ] Role-based actors (builder, reviewer, auditor)
-- [ ] Policy-driven task routing
-- [ ] Compound multi-agent workflows
+- [ ] MCP Hub (proxy + aggregate multiple MCP servers)
+- [ ] Compliance mode (signed audit trail)
 - [ ] Enterprise features (SSO, RBAC, audit export)
-- [ ] Managed SaaS option
 
 ## Not Planned
 
 - ❌ Visual IDE or GUI editor
-- ❌ Cloud-hosted model training or fine-tuning
-- ❌ General-purpose task automation (Zapier/n8n replacement)
-- ❌ Browser extension or web app (V1)
+- ❌ Cloud-hosted model training
+- ❌ General-purpose automation (Zapier/n8n)
 - ❌ Proprietary protocol (MCP only)
 - ❌ Multi-tenant SaaS before V3.0
