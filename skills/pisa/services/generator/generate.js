@@ -1,8 +1,8 @@
 /**
- * PISA Generator V1 — Template + Theme + Content → PPTX
+ * PISA Generator V1 — Primitive + Theme + Content → PPTX
  * 
  * Usage: node generate.js <config.json> <output.pptx>
- * Config: { slides: [{ template, content, theme }] }
+ * Config: { slides: [{ primitive, content, theme }] }
  */
 const PptxGenJS = require("pptxgenjs");
 const fs = require("fs");
@@ -400,7 +400,7 @@ const RENDERERS = {
   decoration: () => {}, // skip
 };
 
-function renderSlide(pptx, template, theme, content) {
+function renderSlide(pptx, primitive, theme, content) {
   const colors = getThemeColors(theme);
   const slide = pptx.addSlide();
 
@@ -414,10 +414,10 @@ function renderSlide(pptx, template, theme, content) {
   });
 
   // Render components in reading order
-  const order = template.reading_order || template.components.map((_, i) => i);
+  const order = primitive.reading_order || primitive.components.map((_, i) => i);
 
   for (const idx of order) {
-    const comp = template.components[idx];
+    const comp = primitive.components[idx];
     if (!comp) continue;
 
     // Merge content overrides
@@ -461,7 +461,7 @@ if (require.main === module) {
   pptx.author = "PISA Generator";
 
   for (const slideConf of config.slides) {
-    renderSlide(pptx, slideConf.template, slideConf.theme, slideConf.content);
+    renderSlide(pptx, slideConf.primitive, slideConf.theme, slideConf.content);
   }
 
   pptx.writeFile({ fileName: outputPath }).then(() => {

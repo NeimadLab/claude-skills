@@ -4,9 +4,9 @@ This covers PISA-specific contribution rules. For general repo guidelines, see t
 
 ## Submitting a Pack
 
-1. Extract templates from your deck using PISA Workflow A
+1. Extract primitives from your deck using PISA Workflow A
 2. Ask Claude: `"Export the library as a pack JSON called my-pack"`
-3. Validate — every template must have:
+3. Validate — every primitive must have:
    - `schema_version: 2.1`
    - `quality_score >= 7.0`
    - `kpi{}` on all KPI card components

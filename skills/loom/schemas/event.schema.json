@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loom Event",
+  "description": "Schema for entries in .loom/events.jsonl",
+  "type": "object",
+  "required": ["event_type", "timestamp"],
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "workspace_initialized",
+        "workspace_resumed",
+        "memory_written",
+        "decision_logged",
+        "session_opened",
+        "session_closed",
+        "tool_call_executed",
+        "policy_evaluated",
+        "write_token_acquired",
+        "write_token_released",
+        "gateway_started",
+        "gateway_stopped",
+        "remote_model_attached",
+        "doctor_check_completed",
+        "repair_applied"
+      ]
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "actor": { "type": ["string", "null"] },
+    "session_id": { "type": ["string", "null"] },
+    "data": { "type": "object" }
+  }
+}

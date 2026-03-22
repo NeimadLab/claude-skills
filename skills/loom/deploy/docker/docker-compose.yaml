@@ -1,0 +1,17 @@
+services:
+  loom:
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile
+    ports:
+      - "8443:8443"
+    volumes:
+      - loom-data:/workspace/.loom
+      - ./project:/workspace
+    environment:
+      - OAF_API_KEY=${OAF_API_KEY}
+      - OAF_LOG_LEVEL=info
+    restart: unless-stopped
+
+volumes:
+  loom-data:

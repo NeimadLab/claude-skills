@@ -2,14 +2,11 @@
 
 ## What PISA Does
 
-PISA turns Claude into a presentation specialist. It produces professional slides through 4 independent layers:
+PISA turns Claude into a presentation specialist. Upload any deck — PPTX, PDF, or screenshot — and Claude reverse-engineers every slide into a reusable **primitive**: a JSON object that captures structure, semantics, and visual treatment without any rendering decisions.
 
-```
-Canvas (skeleton) × Style (personality) = Template (what you browse)
-Template × Theme (colors) × Persona (density) × Content = Final Slide
-```
+Generate new decks by selecting primitives, filling them with content, and rendering to PPTX. Retheme an entire presentation by swapping one JSON file. Review decks against a professional scoring rubric.
 
-Upload any deck → PISA extracts templates. Pick templates → PISA generates PPTX. Swap the theme → entire deck changes palette. Swap the persona → density adapts to your audience.
+The core insight: **content, structure, design, and rendering are independent layers.** Change any layer without touching the others.
 
 ## Step 1 — Add the Skill to Claude
 
@@ -17,24 +14,31 @@ Download [`SKILL.md`](../SKILL.md) and add it to any Claude Project as **Project
 
 That's it. Claude now has PISA expertise — no other setup needed.
 
-## Step 2 — Install a Pack
+## Step 2 — Connect the Registry
 
-The registry URL is built into SKILL.md — no setup needed. Just say:
+Tell Claude:
+
+```
+Use my PISA registry at
+https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json
+```
+
+## Step 3 — Install a Pack
 
 ```
 Install the corporate essentials pack
 ```
 
-→ 24 templates across 21 intents, loaded in seconds.
+→ 24 primitives across 21 intents, loaded in seconds.
 
-## Step 3 — Create Something
+## Step 4 — Create Something
 
 ```
 Create a 10-slide Q3 performance review using the executive persona
 ```
 
 ```
-Upload this PDF and extract all slide templates
+Upload this PDF and extract all slide primitives
 ```
 
 ```
@@ -49,13 +53,12 @@ Retheme this deck using the finance dark theme
 
 | Capability | Trigger |
 |-----------|---------|
-| **Analyze** | Upload PPTX/PDF/image → decompose into templates |
-| **Generate** | "Create a deck about..." → select templates → render PPTX |
+| **Analyze** | Upload PPTX/PDF/image → decompose into primitives |
+| **Generate** | "Create a deck about..." → select primitives → render PPTX |
 | **Retheme** | "Switch to dark mode" → swap theme JSON → re-render |
 | **Review** | "Score this deck" → programmatic QA + rubric |
 | **Catalog** | "Show KPI layouts" → SVG previews inline |
 | **Registry** | "Install finance pack" → fetch from GitHub |
-| **Local override** | Upload your deck → your templates take priority over registry |
 
 ## Dependencies
 

@@ -1,0 +1,47 @@
+# Loom Default Policy Configuration
+# Copy to .loom/policies/default.yaml and customize
+
+rules:
+  # --- Read operations ---
+  - action: read_file
+    default: allow
+    conditions:
+      - path_match: "*.env*"
+        decision: deny
+        reason: "Environment files may contain secrets"
+      - path_match: ".loom/policies/*"
+        decision: deny
+        reason: "Policy files are not exposed to models"
+
+  # --- Write operations ---
+  - action: write_file
+    default: allow
+    requires: write_token
+
+  - action: write_memory
+    default: allow
+
+  # --- Execution ---
+  - action: execute
+    default: approve
+    conditions:
+      - command_match: "npm test"
+        decision: allow
+      - command_match: "cargo test"
+        decision: allow
+      - command_match: "pytest"
+        decision: allow
+    approval_timeout: 60
+
+  # --- Secrets ---
+  - action: read_secret
+    default: deny
+    conditions:
+      - alias_match: "database_url"
+        decision: allow
+        reason: "Whitelisted for development"
+
+  # --- Dependencies ---
+  - action: install_dependency
+    default: approve
+    approval_timeout: 120

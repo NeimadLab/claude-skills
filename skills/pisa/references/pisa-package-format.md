@@ -2,8 +2,8 @@
 
 ## Purpose
 
-A `.pisa` file is a self-contained, portable template exchange unit. It bundles
-everything needed to import a slide template into any PISA library: the template
+A `.pisa` file is a self-contained, portable primitive exchange unit. It bundles
+everything needed to import a slide primitive into any PISA library: the primitive
 JSON, a rendered thumbnail, the theme it was extracted with, and provenance metadata.
 
 ## Structure
@@ -11,9 +11,9 @@ JSON, a rendered thumbnail, the theme it was extracted with, and provenance meta
 A `.pisa` file is a ZIP archive with this layout:
 
 ```
-my_template.pisa
+my_primitive.pisa
 ├── manifest.json          # Package metadata, schema version, dependencies
-├── template.json         # The V2 template (components, roles, tokens, groups)
+├── primitive.json         # The V2 primitive (components, roles, tokens, groups)
 ├── thumbnail.svg          # 1920x1080 rendered preview (neutral or source theme)
 ├── theme.json             # Theme used at extraction time (for re-rendering)
 └── provenance.json        # Source file, extractor version, extraction date, author
@@ -24,7 +24,7 @@ my_template.pisa
 ```json
 {
   "pisa_package_version": 1,
-  "template_schema_version": 2,
+  "primitive_schema_version": 2,
   "id": "prim_quarterly_3_a8f2c1d9e4b7",
   "intent": "kpi_dashboard",
   "quality_score": 7.5,
@@ -45,12 +45,12 @@ my_template.pisa
 
 ## Collection Format (.pisa-collection)
 
-For exporting multiple templates (e.g., an entire library or an intent family):
+For exporting multiple primitives (e.g., an entire library or an intent family):
 
 ```
 my_collection.pisa-collection
-├── collection.json         # Index of all templates with metadata
-├── templates/
+├── collection.json         # Index of all primitives with metadata
+├── primitives/
 │   ├── prim_001.pisa
 │   ├── prim_002.pisa
 │   └── ...
@@ -65,8 +65,8 @@ my_collection.pisa-collection
 {
   "pisa_collection_version": 1,
   "name": "Corporate Slide Library",
-  "description": "Validated templates for corporate brand presentations",
-  "template_count": 24,
+  "description": "Validated primitives for corporate brand presentations",
+  "primitive_count": 24,
   "intent_coverage": {
     "cover": 2, "executive_summary": 3, "kpi_dashboard": 4,
     "comparison_columns": 3, "linear_process": 2, "timeline": 2,
@@ -83,45 +83,45 @@ my_collection.pisa-collection
 
 ## Operations
 
-### Export a single template
+### Export a single primitive
 
 ```python
 import zipfile, json, os, hashlib
 
-def export_pisa(template, theme, thumbnail_path, output_path, author="anonymous", tags=None):
-    """Export a template as a .pisa package."""
+def export_pisa(primitive, theme, thumbnail_path, output_path, author="anonymous", tags=None):
+    """Export a primitive as a .pisa package."""
     manifest = {
         "pisa_package_version": 1,
-        "template_schema_version": template.get("schema_version", 2),
-        "id": template["id"],
-        "intent": template["intent"],
-        "quality_score": template.get("quality_score", 0),
-        "layout_type": template.get("layout_type", "unknown"),
-        "component_count": len(template.get("components", [])),
-        "word_count": template.get("density", {}).get("total_words", 0),
+        "primitive_schema_version": primitive.get("schema_version", 2),
+        "id": primitive["id"],
+        "intent": primitive["intent"],
+        "quality_score": primitive.get("quality_score", 0),
+        "layout_type": primitive.get("layout_type", "unknown"),
+        "component_count": len(primitive.get("components", [])),
+        "word_count": primitive.get("density", {}).get("total_words", 0),
         "tags": tags or [],
         "author": author,
-        "created_at": template.get("source", {}).get("extracted_at", ""),
+        "created_at": primitive.get("source", {}).get("extracted_at", ""),
         "description": "",
         "dependencies": {"min_pisa_version": "2.0", "renderer": "pptxgenjs"},
     }
 
     # Compute checksum
-    prim_bytes = json.dumps(template, sort_keys=True).encode()
+    prim_bytes = json.dumps(primitive, sort_keys=True).encode()
     manifest["checksum"] = f"sha256:{hashlib.sha256(prim_bytes).hexdigest()}"
 
     provenance = {
-        "source_file": template.get("source", {}).get("file"),
-        "source_slide": template.get("source", {}).get("slide"),
-        "extractor": template.get("source", {}).get("extractor"),
-        "extracted_at": template.get("source", {}).get("extracted_at"),
+        "source_file": primitive.get("source", {}).get("file"),
+        "source_slide": primitive.get("source", {}).get("slide"),
+        "extractor": primitive.get("source", {}).get("extractor"),
+        "extracted_at": primitive.get("source", {}).get("extracted_at"),
         "author": author,
-        "version": template.get("version", 1),
+        "version": primitive.get("version", 1),
     }
 
     with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.writestr("manifest.json", json.dumps(manifest, indent=2))
-        zf.writestr("template.json", json.dumps(template, indent=2))
+        zf.writestr("primitive.json", json.dumps(primitive, indent=2))
         zf.writestr("theme.json", json.dumps(theme, indent=2))
         zf.writestr("provenance.json", json.dumps(provenance, indent=2))
         if thumbnail_path and os.path.exists(thumbnail_path):
@@ -140,17 +140,17 @@ def import_pisa(pisa_path, library_path="pisa_library.json",
 
     with zipfile.ZipFile(pisa_path, "r") as zf:
         manifest = json.loads(zf.read("manifest.json"))
-        template = json.loads(zf.read("template.json"))
+        primitive = json.loads(zf.read("primitive.json"))
         # theme = json.loads(zf.read("theme.json"))  # available if needed
 
         # Validate schema version
-        if manifest.get("template_schema_version", 1) > 2:
+        if manifest.get("primitive_schema_version", 1) > 2:
             return {"action": "rejected",
-                    "reason": f"Schema version {manifest['template_schema_version']} "
+                    "reason": f"Schema version {manifest['primitive_schema_version']} "
                               f"not supported (max: 2)"}
 
         # Verify checksum
-        prim_bytes = json.dumps(template, sort_keys=True).encode()
+        prim_bytes = json.dumps(primitive, sort_keys=True).encode()
         expected = f"sha256:{hashlib.sha256(prim_bytes).hexdigest()}"
         if manifest.get("checksum") and manifest["checksum"] != expected:
             return {"action": "rejected", "reason": "Checksum mismatch — file may be corrupted"}
@@ -158,14 +158,14 @@ def import_pisa(pisa_path, library_path="pisa_library.json",
         # Extract thumbnail
         if "thumbnail.svg" in zf.namelist():
             os.makedirs(thumbnail_dir, exist_ok=True)
-            thumb_path = os.path.join(thumbnail_dir, f"{template['id']}.png")
+            thumb_path = os.path.join(thumbnail_dir, f"{primitive['id']}.png")
             with open(thumb_path, "wb") as f:
                 f.write(zf.read("thumbnail.svg"))
 
     # Register using standard V2 registration (handles dedup + versioning)
     # Import from extract_engine to avoid circular deps
-    from services.extraction.extract_engine import register_template_v2
-    return register_template_v2(template, library_path, mode)
+    from sub_skills.slide_to_primitive.extract_engine import register_primitive_v2
+    return register_primitive_v2(primitive, library_path, mode)
 
 
 ### Batch export (collection)
@@ -179,10 +179,10 @@ def export_collection(library_path, output_path, themes=None,
 
     os.makedirs("/tmp/pisa_export", exist_ok=True)
 
-    # Export each template as .pisa
+    # Export each primitive as .pisa
     pisa_files = []
     intent_coverage = {}
-    for prim in library["templates"]:
+    for prim in library["primitives"]:
         intent = prim["intent"]
         intent_coverage[intent] = intent_coverage.get(intent, 0) + 1
 
@@ -196,7 +196,7 @@ def export_collection(library_path, output_path, themes=None,
     collection_meta = {
         "pisa_collection_version": 1,
         "name": name,
-        "template_count": len(pisa_files),
+        "primitive_count": len(pisa_files),
         "intent_coverage": intent_coverage,
         "themes_included": list(themes.keys()) if themes else [],
         "created_at": datetime.datetime.now().isoformat(),
@@ -206,7 +206,7 @@ def export_collection(library_path, output_path, themes=None,
     with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.writestr("collection.json", json.dumps(collection_meta, indent=2))
         for pf in pisa_files:
-            zf.write(pf, f"templates/{os.path.basename(pf)}")
+            zf.write(pf, f"primitives/{os.path.basename(pf)}")
         if themes:
             for name, theme_data in themes.items():
                 zf.writestr(f"themes/{name}.json", json.dumps(theme_data, indent=2))
@@ -223,10 +223,10 @@ def export_collection(library_path, output_path, themes=None,
 ## CLI Usage
 
 ```bash
-# Export single template
+# Export single primitive
 python3 scripts/library/export_pisa.py --id prim_deck_3_a8f2 --output slide.pisa
 
-# Import single template
+# Import single primitive
 python3 scripts/library/import_pisa.py slide.pisa --library pisa_library.json
 
 # Export entire library as collection

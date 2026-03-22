@@ -3,7 +3,7 @@
 ## What a Persona Is
 
 A persona is a **generation strategy** that controls how PISA builds a deck. It affects:
-- Which templates are preferred or forbidden
+- Which primitives are preferred or forbidden
 - What density limits apply (overriding defaults)
 - How titles are written (insight vs question vs action vs label)
 - How content is distributed across slides (thin vs dense)
@@ -230,7 +230,7 @@ Individual persona files are JSON matching the schema above, fetchable by Claude
 
 ```
 User brief  →  Persona (how to communicate)
-            →  Pack (which templates to use)
+            →  Pack (which primitives to use)
             →  Theme (what colours/fonts)
             →  PISA generates deck
 ```
@@ -248,7 +248,7 @@ to create a visually dramatic financial presentation.
 ```
 User: "Generate a Q3 board deck using executive persona"
 Claude: [loads executive persona rules]
-        [selects templates matching preferred intents]
+        [selects primitives matching preferred intents]
         [applies density overrides: max 60 words, max 3 bullets]
         [writes titles in action-oriented style]
         [limits to 4-8 slides]

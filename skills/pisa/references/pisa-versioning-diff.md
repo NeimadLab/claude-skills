@@ -1,8 +1,8 @@
-# PISA Template Versioning & Diff
+# PISA Primitive Versioning & Diff
 
 ## Purpose
 
-Track template evolution over time. When a deck is re-extracted after modifications,
+Track primitive evolution over time. When a deck is re-extracted after modifications,
 PISA creates a new version instead of a blind overwrite. The diff tool shows exactly
 what changed between versions.
 
@@ -10,13 +10,13 @@ what changed between versions.
 
 ## Version Model
 
-Every template has:
+Every primitive has:
 - `version` (integer, starting at 1)
 - `_content_hash` (SHA-256 of components JSON, first 12 chars)
 - `previous_hash` (hash of the version it replaced, if any)
 - `source.extracted_at` (timestamp)
 
-Same-source detection: if a newly extracted template has the same `source.file` +
+Same-source detection: if a newly extracted primitive has the same `source.file` +
 `source.slide` as an existing library entry, PISA increments the version and stores
 the `previous_hash` link. The old version is replaced in the active library but can
 be recovered from the version log.
@@ -31,7 +31,7 @@ Maintained alongside the library. Records every version transition.
   "log_version": 1,
   "entries": [
     {
-      "template_id": "prim_quarterly_3_a8f2c1d9e4b7",
+      "primitive_id": "prim_quarterly_3_a8f2c1d9e4b7",
       "from_version": 1,
       "to_version": 2,
       "from_hash": "a8f2c1d9e4b7",
@@ -55,8 +55,8 @@ Maintained alongside the library. Records every version transition.
 ```python
 import json
 
-def diff_templates(prim_a, prim_b):
-    """Compare two template versions. Returns structured diff report."""
+def diff_primitives(prim_a, prim_b):
+    """Compare two primitive versions. Returns structured diff report."""
     diff = {
         "id": prim_b.get("id", prim_a.get("id")),
         "version_a": prim_a.get("version", 1),
@@ -210,10 +210,10 @@ def _match_components(ca, cb):
 ## CLI Usage
 
 ```bash
-# Show diff between two versions (by template ID)
+# Show diff between two versions (by primitive ID)
 python3 scripts/library/diff.py --id prim_deck_3_a8f2 --v1 1 --v2 2
 
-# Show version history for a template
+# Show version history for a primitive
 python3 scripts/library/diff.py --id prim_deck_3_a8f2 --history
 
 # Compare two .pisa files directly

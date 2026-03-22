@@ -1,10 +1,8 @@
-# Schema V2.1 — Template JSON Format
+# Schema V2.1 — Primitive JSON Format
 
 ## Overview
 
-A **template** is the combination of a canvas (structure) and a style (visual personality). It's the concrete JSON artifact that lives in packs, appears in the gallery, and gets selected during generation.
-
-The JSON format is the same whether you're looking at a raw canvas or a fully styled template — the difference is that templates have `visual{}` properties populated by the style rules (bg_variant, icons, borders, etc.), while raw canvases leave those at defaults.
+Every slide decomposes into a primitive: a JSON object that captures what the slide **is**, not how it **looks**.
 
 V2.1 added three component-level extensions that improved reproduction fidelity from 50% to 85% in testing:
 
@@ -13,9 +11,9 @@ V2.1 added three component-level extensions that improved reproduction fidelity 
 - **`content_data{}`** — structured body content (timelines, org charts, checklists)
 - **`zones[]`** — compound slides with multiple intents
 
-All new fields are optional. V2.0 templates remain valid V2.1 templates.
+All new fields are optional. V2.0 primitives remain valid V2.1 primitives.
 
-## Complete Template Structure
+## Complete Primitive Structure
 
 ```json
 {
@@ -32,23 +30,12 @@ All new fields are optional. V2.0 templates remain valid V2.1 templates.
   "reading_order": [0, 1, 2, 3],
   "quality_score": 8.5,
   "source": {
-    "origin": "local | registry | override",
-    "file": "input.pptx",
+    "file": "example.pptx",
     "slide": 1,
-    "extractor": "xml | vision | manual"
+    "extractor": "vision"
   }
 }
 ```
-
-### Template Resolution Order
-
-When generating slides, Claude selects templates using this priority:
-
-1. **`local`** — extracted from the user's own deck this session. Always preferred.
-2. **`override`** — registry templates the user has modified. Second priority.
-3. **`registry`** — installed from packs. Fallback.
-
-Within the same origin tier, higher `quality_score` wins.
 
 ## kpi{} — Structured KPI Data
 

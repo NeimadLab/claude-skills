@@ -45,7 +45,7 @@ The bootstrap script:
 ```bash
 cd skills/pisa
 python3 -c "
-from services.extraction.extract_engine import deep_inventory
+from subskills.slide_to_primitive.extract_engine import deep_inventory
 from pptx import Presentation
 prs = Presentation('path/to/deck.pptx')
 for i, slide in enumerate(prs.slides):
@@ -60,8 +60,8 @@ for i, slide in enumerate(prs.slides):
 ```bash
 python3 -c "
 import json
-from services.svg.template_to_svg import render_svg
-prim = json.load(open('registry/packs/corporate-essentials.json'))['templates'][0]
+from services.svg.primitive_to_svg import render_svg
+prim = json.load(open('registry/packs/corporate-essentials.json'))['primitives'][0]
 svg = render_svg(prim)
 open('preview.svg', 'w').write(svg)
 print('Preview saved')
@@ -89,6 +89,6 @@ os.chdir('registry')
 reg = json.load(open('registry.json'))
 for p in reg['packs']:
     pack = json.load(open(p['url']))
-    print(f\"{p['id']}: {len(pack['templates'])} templates\")
+    print(f\"{p['id']}: {len(pack['primitives'])} primitives\")
 "
 ```

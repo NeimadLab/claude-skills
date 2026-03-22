@@ -7,8 +7,7 @@
   },
   "density": {
     "max_words_body": 50,
-    "max_bullets": 4,
-    "max_content_shapes": 6
+    "max_bullets": 4
   },
   "titles": {
     "style": "direct_value"
@@ -32,10 +31,5 @@
   },
   "typical_slide_count": {
     "standard": "10-15"
-  },
-  "version": "1.1.0",
-  "source": {
-    "origin": "registry",
-    "type": "persona"
   }
 }

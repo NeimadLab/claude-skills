@@ -7,8 +7,7 @@
   },
   "density": {
     "max_words_body": 80,
-    "max_bullets": 5,
-    "max_content_shapes": 7
+    "max_bullets": 5
   },
   "titles": {
     "style": "descriptive_context"
@@ -32,10 +31,5 @@
   },
   "typical_slide_count": {
     "standard": "10-20"
-  },
-  "version": "1.1.0",
-  "source": {
-    "origin": "registry",
-    "type": "persona"
   }
 }
