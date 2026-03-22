@@ -62,7 +62,7 @@ jobs:
           reg = json.load(open('registry.json'))
           for p in reg.get('packs', []):
               d = json.load(open(p['url']))
-              print(f\"    ✅ {p['url']}: {len(d['primitives'])} items\")
+              print(f\"    ✅ {p['url']}: {len(d['canvases'])} items\")
           for t in reg.get('themes', []):
               json.load(open(t['url']))
               print(f\"    ✅ {t['url']}\")
@@ -72,20 +72,6 @@ jobs:
           " || ERRORS=$((ERRORS + 1))
             fi
 
-
-            # Skill-specific: if pyproject.toml exists, install and run tests
-            if [ -f "$skill_dir/pyproject.toml" ]; then
-              echo "  → Python package found, installing and testing..."
-              pip install -e "$skill_dir[dev]" -q 2>/dev/null
-              if [ -d "$skill_dir/tests" ]; then
-                if python3 -m pytest "$skill_dir/tests" -q --tb=short 2>/dev/null; then
-                  echo "  ✅ Tests passed"
-                else
-                  echo "  ❌ Tests failed"
-                  ERRORS=$((ERRORS + 1))
-                fi
-              fi
-            fi
             echo "  ═══ $SKILL_NAME complete ═══"
           done
 

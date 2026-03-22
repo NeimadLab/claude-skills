@@ -72,7 +72,7 @@
 <line x1="530" y1="336" x2="530" y2="360" class="arr" marker-end="url(#a)"/>
 
 <rect class="box-fixed" x="80" y="360" width="520" height="44" rx="8" stroke-width="0.5"/>
-<text class="th lbl-fixed" x="340" y="377" text-anchor="middle" dominant-baseline="central">V2 primitive JSON contract</text>
+<text class="th lbl-fixed" x="340" y="377" text-anchor="middle" dominant-baseline="central">V2 canvas JSON contract</text>
 <text class="ts lbl-sub" x="340" y="393" text-anchor="middle">intent · layout · components · roles · tokens · quality</text>
 
 <line x1="200" y1="404" x2="200" y2="432" class="arr" marker-end="url(#a)"/>
@@ -80,9 +80,9 @@
 <line x1="480" y1="404" x2="480" y2="432" class="arr" marker-end="url(#a)"/>
 
 <rect class="box-content" x="80" y="432" width="160" height="78" rx="12" stroke-width="0.5"/>
-<text class="th lbl-content" x="160" y="454" text-anchor="middle">Primitive packs</text>
+<text class="th lbl-content" x="160" y="454" text-anchor="middle">Canvas packs</text>
 <text class="ts lbl-content" x="160" y="472" text-anchor="middle">Swappable</text>
-<text class="ts lbl-content" x="160" y="500" text-anchor="middle">4 packs · 61 primitives</text>
+<text class="ts lbl-content" x="160" y="500" text-anchor="middle">4 packs · 61 canvases</text>
 
 <rect class="box-content" x="260" y="432" width="160" height="78" rx="12" stroke-width="0.5"/>
 <text class="th lbl-content" x="340" y="454" text-anchor="middle">Themes</text>
@@ -100,7 +100,7 @@
 
 <rect class="box-fixed" x="80" y="538" width="520" height="44" rx="8" stroke-width="0.5"/>
 <text class="th lbl-fixed" x="340" y="555" text-anchor="middle" dominant-baseline="central">Token resolution + pptxgenjs render</text>
-<text class="ts lbl-sub" x="340" y="571" text-anchor="middle">Primitive + theme → resolved shapes → PPTX</text>
+<text class="ts lbl-sub" x="340" y="571" text-anchor="middle">Canvas + theme → resolved shapes → PPTX</text>
 
 <line x1="340" y1="582" x2="340" y2="606" class="arr" marker-end="url(#a)"/>
 

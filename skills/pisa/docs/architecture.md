@@ -4,21 +4,21 @@
 
 PISA defines **what** to produce (contracts), not **how** to produce it (strategies). This single principle enables every form of modularity in the system.
 
-The core contract: given a slide, produce a **V2.1 primitive JSON** with intent, layout, components (each with role, position, kpi data, visual treatment), semantic groups, reading order, and quality score.
+The core contract: given a slide, produce a **V2.1 canvas JSON** with intent, layout, components (each with role, position, kpi data, visual treatment), semantic groups, reading order, and quality score.
 
 Two extraction strategies fulfil this contract:
 
 - **Strategy 1 — XML Parsing** (python-pptx + extract_engine.py): precise coordinates, batch-capable, works on PPTX files
 - **Strategy 2 — Vision** (Claude's native vision): works on images, PDFs, screenshots — anything Claude can see
 
-Both produce identical primitive JSON. Everything downstream works identically regardless of which strategy created the primitive.
+Both produce identical canvas JSON. Everything downstream works identically regardless of which strategy created the canvas.
 
 ## Four Independent Layers
 
 ```
 CONTENT     What the slide says          (user's data)
     ↓
-STRUCTURE   How it's organized           (primitive: intent + components)
+STRUCTURE   How it's organized           (canvas: intent + components)
     ↓
 DESIGN      How it looks                 (theme: colors + fonts + tokens)
     ↓
@@ -42,12 +42,12 @@ Each layer is swappable:
   │            │                │
   ▼            ▼                ▼
 Extraction   Generation      Review
-(XML/Vision) (Primitive→PPTX) (QA+Rubric)
+(XML/Vision) (Canvas→PPTX) (QA+Rubric)
   │            │                │
   └────────────┼────────────────┘
                │
          ┌─────▼─────┐
-         │ Primitive  │  The universal contract
+         │ Canvas  │  The universal contract
          │ JSON V2.1  │  Everything produces it
          └─────┬─────┘  Everything consumes it
                │
@@ -60,8 +60,8 @@ SVG Preview  Theme Tokens    Registry
 
 ## What Makes It Modular
 
-- **Primitives are portable**: extract from one deck, use in another, share across teams
-- **Themes are universal**: any theme works with any primitive
+- **Canvases are portable**: extract from one deck, use in another, share across teams
+- **Themes are universal**: any theme works with any canvas
 - **Personas are orthogonal**: a persona changes density and narrative, not structure
 - **Packs are composable**: install multiple packs, they merge into one library
 - **Strategies are pluggable**: add a new extraction strategy without changing the contract

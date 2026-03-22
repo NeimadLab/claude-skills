@@ -13,10 +13,10 @@ Activate when the user:
 - Uploads a PPTX and asks to analyze, review, score, extract, decompose, or reverse engineer it
 - Asks to generate, create, build, or draft a PowerPoint, presentation, slide deck, or slides
 - Asks to retheme, rebrand, or reskin existing slides or a deck
-- Mentions "PISA", "slide primitives", "slide library", "design tokens", or "deck persona"
+- Mentions "PISA", "slide canvases", "slide library", "design tokens", or "deck persona"
 - Asks to install, list, or update PISA packs, themes, or personas
 - Uploads a pisa_library.json, .pisa file, or .pisa-collection
-- Asks to show the slide catalog or preview primitives
+- Asks to show the slide catalog or preview canvases
 - References specific persona names: strategy, executive, keynote, startup, technical, sales, workshop, academic
 
 ## Two Tiers
@@ -43,26 +43,26 @@ npm install pptxgenjs 2>/dev/null
 All of these work in Claude's sandbox with zero setup beyond the pip/npm install above.
 
 ### Build & Generate
-- **"Create a 10-slide Q3 review deck"** → Selects primitives from library, fills with content, renders PPTX
+- **"Create a 10-slide Q3 review deck"** → Selects canvases from library, fills with content, renders PPTX
 - **"Use the executive persona"** → Switches density, title style, narrative to board-level
-- **"Retheme this deck to dark mode"** → Swaps theme tokens, re-renders same primitives
+- **"Retheme this deck to dark mode"** → Swaps theme tokens, re-renders same canvases
 - **"Review this deck and score it"** → Programmatic + vision QA, 5-dimension rubric
 
 ### Analyze & Extract
-- **Upload a PPTX** → Reverse-engineers every slide into reusable V2.1 primitives
-- **Upload a PDF or screenshot** → Vision extraction produces the same primitive format
+- **Upload a PPTX** → Reverse-engineers every slide into reusable V2.1 canvases
+- **Upload a PDF or screenshot** → Vision extraction produces the same canvas format
 - **"What kind of slide is this?"** → Quick vision analysis with intent + layout classification
 
 ### Library & Catalog
-- **"Show me all KPI primitives"** → SVG visual catalog displayed inline via show_widget
+- **"Show me all KPI canvases"** → SVG visual catalog displayed inline via show_widget
 - **"Show this in dark and light themes"** → Side-by-side SVG theme comparison
 - **"Export my library"** → Downloads pisa_library.json for next session
 - **Upload pisa_library.json** → Restores full library from previous session
-- **Upload a .pisa-collection ZIP** → Imports shared primitive collections
+- **Upload a .pisa-collection ZIP** → Imports shared canvas collections
 
 ### Registry & Packs (Online Catalog)
 - **"List available packs"** → Fetches registry.json from GitHub, shows available packs
-- **"Install the finance pack"** → web_fetch loads 14 primitives + themes into session
+- **"Install the finance pack"** → web_fetch loads 14 canvases + themes into session
 - **"Install corporate dark theme"** → Fetches and activates a theme from registry
 - **"Check for updates"** → Compares installed vs registry versions, offers to update
 - **"Install the keynote persona"** → Loads persona rules from registry
@@ -70,9 +70,9 @@ All of these work in Claude's sandbox with zero setup beyond the pip/npm install
 **The registry is live and online. Always fetch it — never say it's unavailable.**
 
 ### Local Overrides
-Primitives you extract from your own decks automatically take priority over registry
-primitives. Your brand, your layouts, your style — always used first.
-- **Upload your deck** → Extract → your primitives are tagged `local` and used first
+Canvases you extract from your own decks automatically take priority over registry
+canvases. Your brand, your layouts, your style — always used first.
+- **Upload your deck** → Extract → your canvases are tagged `local` and used first
 - **"I prefer my KPI layout"** → Tags it as `override`, always selected over registry
 - **"Use the registry version"** → Forces the pack version for that slide
 
@@ -88,7 +88,7 @@ Library resets between sessions. Three ways to persist:
 
 PISA defines WHAT to produce (contracts), not HOW to produce it (strategies).
 
-**The core contract:** Given a slide, produce a V2 primitive JSON with intent, layout_type,
+**The core contract:** Given a slide, produce a V2 canvas JSON with intent, layout_type,
 components (role + position), semantic groups, reading order, and quality score.
 
 **Two strategies fulfil this contract:**
@@ -97,7 +97,7 @@ components (role + position), semantic groups, reading order, and quality score.
 
 Claude chooses the best strategy per situation. Both produce identical output format.
 Everything downstream (library, SVG preview, QA, generation, retheme) works the same
-regardless of which strategy produced the primitive.
+regardless of which strategy produced the canvas.
 
 This design means PISA gets better as models get better — a future model with superior
 vision replaces 571 lines of heuristic Python with a single structured prompt.
@@ -107,13 +107,13 @@ vision replaces 571 lines of heuristic Python with a single structured prompt.
 When a user asks "how does PISA work?" or needs an overview, display the architecture
 SVG from `references/pisa-architecture.svg` via `show_widget`. It shows:
 
-- **Gray (fixed):** Workflow router, V2 primitive contract, token resolution, renderer
+- **Gray (fixed):** Workflow router, V2 canvas contract, token resolution, renderer
 - **Purple (pluggable strategies):** Extraction (XML or Vision), QA (Programmatic or Vision)
-- **Teal (pluggable content):** Primitive packs, themes, personas — all swappable via registry
+- **Teal (pluggable content):** Canvas packs, themes, personas — all swappable via registry
 - **Coral (distribution):** GitHub registry feeds packs/themes/personas via web_fetch
 
-The key insight: everything above and below the "V2 primitive JSON contract" bar is
-independent. Extraction strategies produce primitives. Generation consumes primitives.
+The key insight: everything above and below the "V2 canvas JSON contract" bar is
+independent. Extraction strategies produce canvases. Generation consumes canvases.
 Swap any colored module without touching the others.
 
 ---
@@ -137,7 +137,7 @@ User request
     ↓
 [4] Load library (session JSON, or from uploaded file, or install pack from registry)
     ↓
-[5] Resolve primitives: local > override > registry
+[5] Resolve canvases: local > override > registry
     ↓
 [6] Execute workflow steps
     ↓
@@ -150,6 +150,48 @@ User request
 
 ---
 
+## Resource Resolution — Unified Rules
+
+Every PISA resource (canvases, personas, themes, density limits) can come from
+multiple sources. The same resolution order applies to ALL resource types:
+
+```
+PRIORITY (highest first):
+
+1. LOCAL      — extracted or created by the user this session
+2. OVERRIDE   — user modified a registry/built-in resource
+3. REGISTRY   — fetched from the online registry via web_fetch
+4. BUILT-IN   — hardcoded in this SKILL.md file (fallback only)
+```
+
+### How Claude identifies the source
+
+Every resource carries metadata:
+
+| Resource | Source field | Version field |
+|----------|-------------|---------------|
+| Canvases | `source.origin` = local/override/registry | `version` (integer) |
+| Personas | `source.origin` = registry/builtin | `version` = "1.1.0" |
+| Themes | `_source` = registry/builtin | `_version` = "1.1.0" |
+| Density limits | Inherited from active persona | — |
+
+### Rules
+
+- **Canvases:** When selecting for an intent, pick the highest-priority origin. Within same origin, pick highest quality_score. `source.pack` identifies which pack it came from.
+- **Personas:** If Claude fetches a persona JSON from the registry, its values override the SKILL.md summaries. If the registry is unreachable, use the SKILL.md summaries.
+- **Themes:** Pack-embedded themes (inside pack JSONs) and standalone themes (separate JSON files) use the same flat token format. Pack-embedded themes load automatically with the pack. Standalone themes load explicitly ("install corporate dark theme"). User-defined themes override both.
+- **Density limits:** Come from the active persona. If no persona is active, use the defaults in the Density Limits table below.
+
+### Conflict detection
+
+When the same resource exists at multiple levels:
+- Claude uses the highest-priority version silently (no need to ask)
+- If the user says "why are you using this layout?" → explain the resolution chain
+- If the user says "use the registry version" → force origin=registry for that resource
+- If the user says "use my version" → force origin=local
+
+---
+
 ## Workflow F — Registry & Pack Management
 
 ### REGISTRY URL — USE THIS EXACT URL:
@@ -157,8 +199,8 @@ User request
 https://raw.githubusercontent.com/NeimadLab/claude-skills/main/skills/pisa/registry/registry.json
 ```
 
-When the user asks ANYTHING about packs, registry, available primitives, or says "list/install/update":
-→ IMMEDIATELY `web_fetch` the URL above. Do NOT say it's not live. Do NOT fall back to built-in primitives. FETCH FIRST.
+When the user asks ANYTHING about packs, registry, available canvases, or says "list/install/update":
+→ IMMEDIATELY `web_fetch` the URL above. Do NOT say it's not live. Do NOT fall back to built-in canvases. FETCH FIRST.
 
 ### List Available Resources
 When user says "list PISA packs" / "what packs are available" / "show registry":
@@ -170,10 +212,10 @@ When user says "list PISA packs" / "what packs are available" / "show registry":
 When user says "install [pack name]" / "load the finance pack":
 1. `web_fetch` registry.json (URL above)
 2. Find the pack entry, build full URL: `{base_url}/{pack.url}`
-3. `web_fetch` the pack JSON (contains primitives + embedded SVGs + themes)
-4. Merge primitives into the session library, tagged `source.origin: "registry"`
+3. `web_fetch` the pack JSON (contains canvases + embedded SVGs + themes)
+4. Merge canvases into the session library, tagged `source.origin: "registry"`
 5. Load included themes
-6. Confirm: "Loaded Finance & Reporting: 14 primitives across 8 intents, 2 themes."
+6. Confirm: "Loaded Finance & Reporting: 14 canvases across 8 intents, 2 themes."
 
 ### Install a Theme
 When user says "install [theme name]" / "use corporate dark theme":
@@ -201,7 +243,8 @@ Themes control colours/fonts. Personas control content density, title style, nar
 intent selection, and visual ratio.
 
 ### Applying a Persona
-When a persona is active, override these defaults for ALL generation and review operations:
+When a persona is active, override these defaults for ALL generation and review operations.
+See **Resource Resolution** section above for priority rules.
 
 | Parameter | Default | Persona overrides |
 |-----------|---------|------------------|
@@ -249,7 +292,7 @@ prs = Presentation("uploaded.pptx")
 
 ### A2. Slide Analysis — The Contract (V2.1)
 
-**For each slide, produce a V2.1 primitive JSON with these fields:**
+**For each slide, produce a V2.1 canvas JSON with these fields:**
 - `intent` (one of 21 canonical intents) + `intent_confidence` (0–1)
 - `secondary_intent` (optional — for compound slides with 2+ intents fused)
 - `layout_type` (grid / columns / rows / stacked / radial / freeform)
@@ -269,22 +312,37 @@ prs = Presentation("uploaded.pptx")
 
 ### Strategy 1 — XML Parsing (python-pptx)
 
-The `extract_engine.py` reads the PPTX at the XML/data model level. Best when:
+The `extract_engine.py` (`services/extraction/`) reads the PPTX at the XML/data model level. Best when:
 - Precise coordinate extraction is needed (e.g., for reproduction or retheme)
 - The PPTX contains grouped shapes, rotated elements, or complex nesting
 - Token-level colour extraction is required (exact hex values for theme mapping)
 - Batch processing a large deck (faster than vision per slide)
 
-```python
-# Uses: python-pptx, scipy.KDTree, sklearn.DBSCAN
-# 12-step pipeline: deep inventory → spatial analysis → role assignment →
-#   semantic groups → intent classification → token extraction →
-#   build primitive → dedup → register → SVG preview → batch → report
-```
+**12-step pipeline:**
+
+| Step | What | Output |
+|------|------|--------|
+| 1. Deep inventory | Flatten groups, compute oriented bounding boxes, flag decorative | Flat shape list |
+| 2. Spatial analysis | Alignment axes, layout classification (DBSCAN clustering) | grid/columns/rows/stacked/radial/freeform |
+| 3. Role assignment | Per-shape: title, subtitle, body, kpi_card, label, chart, table, image | Roles array |
+| 4. Semantic groups | KPI units (number + label + icon), image + caption pairs | Group indices |
+| 5. Intent classification | Heuristic scoring → LLM refinement if confidence < 0.65 | Intent + confidence |
+| 6. Token extraction | KDTree colour matching, font token mapping | Design tokens |
+| 7. Build canvas | Assemble V2.1 JSON with all fields | Canvas JSON |
+| 8. Deduplication | LSH hash → weighted similarity (threshold 0.82) | Skip/replace/variant |
+| 9. Register | Versioned library entry with source.origin="local" | Library update |
+| 10. SVG preview | Render canvas → embed SVG string | Canvas with `svg` field |
+| 11. Batch | Orchestrate steps 1–10 for all slides | Full deck extraction |
+| 12. Report | Per-slide table: intent, confidence, quality, status | User-facing summary |
+
+**Key rules:**
+- Never auto-approve with confidence < 0.65 or ambiguous flag
+- Maximum 8 content components per canvas (decorative excluded)
+- Quality score < 4.0 = "draft" status, not used for generation without override
 
 ### Strategy 2 — Vision Analysis (Claude's native vision)
 
-Claude looks at the slide image and produces the same V2.1 primitive JSON directly.
+Claude looks at the slide image and produces the same V2.1 canvas JSON directly.
 Best when:
 - The slide is available as an image (screenshot, PDF page, photo of projected slide)
 - The PPTX is not available (user has a photo or PDF, not the source file)
@@ -393,9 +451,9 @@ If both are available (PPTX + rendered image):
     → Compare results: if they diverge significantly, flag for user review
 ```
 
-**Both strategies produce the same V2 primitive JSON.** Everything downstream
+**Both strategies produce the same V2 canvas JSON.** Everything downstream
 (library registration, SVG preview, QA, generation, retheme) works identically
-regardless of which strategy produced the primitive.
+regardless of which strategy produced the canvas.
 
 ### A3. Present extraction report
 Show per-slide table: slide#, intent, confidence, quality, layout, status.
@@ -414,27 +472,27 @@ When user describes slides they want:
 For each slide: intent + key message + supporting content.
 If persona is active, filter intents through preferred/discouraged lists.
 
-### B1b. Resolve primitives (local > remote)
+### B1b. Resolve canvases (local > remote)
 
-For each slide in the plan, select the best primitive using this priority:
+For each slide in the plan, select the best canvas using this priority:
 
 ```
 RESOLUTION ORDER (highest priority first):
 
-1. LOCAL — primitives extracted from the user's own deck this session
+1. LOCAL — canvases extracted from the user's own deck this session
    source.origin = "local"
    These capture the user's actual brand, layout, and style.
 
-2. OVERRIDE — registry primitives the user has modified this session
+2. OVERRIDE — registry canvases the user has modified this session
    source.origin = "override"
-   User said "I prefer this layout" or edited a registry primitive.
+   User said "I prefer this layout" or edited a registry canvas.
 
-3. REGISTRY — primitives installed from packs
+3. REGISTRY — canvases installed from packs
    source.origin = "registry"
    Generic professional templates from the online catalog.
 ```
 
-When multiple primitives match an intent, prefer the one with:
+When multiple canvases match an intent, prefer the one with:
 1. Higher priority origin (local > override > registry)
 2. Higher quality_score (within the same origin tier)
 3. Better layout match for the content
@@ -444,11 +502,11 @@ The user can force a specific source:
 - "Use the registry version" → forces registry
 - "Use the startup pack's cover" → forces a specific pack
 
-If no primitives exist for a required intent:
+If no canvases exist for a required intent:
 - If registry is available: auto-install the corporate essentials pack
 - If offline: generate a minimal layout from the intent definition
 
-### B2. Show SVG preview of selected primitives
+### B2. Show SVG preview of selected canvases
 Before rendering the PPTX, show the user what each slide will look like
 using the SVG renderer (via `show_widget`). This replaces the old text-only
 confirmation block with a visual grid.
@@ -458,7 +516,7 @@ confirmation block with a visual grid.
 const PptxGenJS = require('pptxgenjs');
 let pptx = new PptxGenJS();
 pptx.layout = 'LAYOUT_WIDE'; // 13.333" x 7.5"
-// For each resolved primitive:
+// For each resolved canvas:
 //   x_in = (x_pct / 100) * 13.333
 //   y_in = (y_pct / 100) * 7.5
 await pptx.writeFile({ fileName: 'output.pptx' });
@@ -483,7 +541,7 @@ Provide PPTX as downloadable file.
 
 ## Workflow C — Retheme
 
-1. Select source primitives (by ID or intent)
+1. Select source canvases (by ID or intent)
 2. Apply new theme via resolve_tokens()
 3. Show SVG preview with new theme
 4. Render and QA
@@ -533,39 +591,39 @@ Target: ≥60% (e.g., 90+ out of 150 for a 10-slide deck).
 
 ### Browse the Visual Catalog
 ```
-User: "Show me all available primitives"
+User: "Show me all available canvases"
 User: "Show KPI dashboard layouts"
 User: "What comparison layouts do I have?"
 ```
 → Filter library by intent/quality/layout → generate SVG grid → display via `show_widget`.
-Each thumbnail shows the primitive's structure with the active theme applied.
+Each thumbnail shows the canvas's structure with the active theme applied.
 
 ### Multi-Theme Preview
 ```
-User: "Show this primitive in light and dark themes"
+User: "Show this canvas in light and dark themes"
 User: "Compare corporate_dark vs corporate_light for the KPI dashboard"
 ```
-→ Render same primitive with each theme → side-by-side SVG via `show_widget`.
+→ Render same canvas with each theme → side-by-side SVG via `show_widget`.
 
-### Import Primitives
+### Import Canvases
 ```
 User: [uploads pisa_library.json]
 User: "Load my PISA library"
 ```
-→ Read JSON → restore all primitives + SVGs into session library.
-→ Report: "Loaded 47 primitives across 18 intents. Library ready."
+→ Read JSON → restore all canvases + SVGs into session library.
+→ Report: "Loaded 47 canvases across 18 intents. Library ready."
 
 ```
 User: [uploads .pisa-collection ZIP]
 ```
-→ Unpack → validate schema + checksums → merge primitives → report.
+→ Unpack → validate schema + checksums → merge canvases → report.
 
 ### Install from Registry
 ```
 User: "Install the finance pack"
 ```
 → web_fetch pack JSON from GitHub → merge into session library → confirm.
-→ "Loaded Finance & Reporting: 14 primitives, 8 intents, 2 themes."
+→ "Loaded Finance & Reporting: 14 canvases, 8 intents, 2 themes."
 
 ### Export Library
 ```
@@ -573,20 +631,20 @@ User: "Export my library"
 User: "Save the library for next time"
 ```
 → Generate pisa_library.json as downloadable artifact.
-→ "Library exported: 52 primitives, 4 themes. Upload this file to restore next session."
+→ "Library exported: 52 canvases, 4 themes. Upload this file to restore next session."
 
-### Primitive Details
+### Canvas Details
 ```
-User: "Show me primitive corp_slide1_kpi"
+User: "Show me canvas corp_slide1_kpi"
 User: "What's in the strategy consulting pack?"
 ```
-→ Display single primitive SVG + full metadata (intent, quality, components, source).
+→ Display single canvas SVG + full metadata (intent, quality, components, source).
 
 ---
 
 ## SVG Preview System
 
-The SVG renderer produces structural previews directly from primitive JSON.
+The SVG renderer produces structural previews directly from canvas JSON.
 No external dependencies. Each role has distinctive visual treatment:
 
 | Role | SVG Rendering |
@@ -654,9 +712,9 @@ Each has defined shape/word limits — see pisa-slide-taxonomy.md for full speci
 ## Token Resolution
 
 ```python
-def resolve_tokens(primitive, theme):
+def resolve_tokens(canvas, theme):
     import copy
-    resolved = copy.deepcopy(primitive)
+    resolved = copy.deepcopy(canvas)
     FALLBACK = {"token.color.primary":"333333","token.font.heading":"Arial"}
     def walk(obj):
         if isinstance(obj, dict):
@@ -677,7 +735,7 @@ def resolve_tokens(primitive, theme):
 The library resets between sessions. To persist:
 
 **Export:** "Export my PISA library" → Claude generates pisa_library.json as downloadable artifact.
-**Import:** User uploads pisa_library.json → Claude reads and restores all primitives.
+**Import:** User uploads pisa_library.json → Claude reads and restores all canvases.
 **Pack-based:** User installs packs from registry each session (fast — one web_fetch per pack).
 
 The recommended flow for regular users:
@@ -690,27 +748,28 @@ The recommended flow for regular users:
 ## Separation of Concerns (Always Maintain)
 
 Claude must NEVER hardcode visual properties in the renderer call. The visual outcome is
-determined entirely by: primitive (structure) + theme (design) + content + persona (strategy).
+determined entirely by: canvas (structure) + theme (design) + content + persona (strategy).
 
 If output doesn't look right:
-- Wrong layout? → Select a different primitive
+- Wrong layout? → Select a different canvas
 - Wrong colours? → Fix the theme JSON
 - Too dense? → Reduce content, change persona, or split
-- Bad structure? → Re-extract or manually adjust the primitive
+- Bad structure? → Re-extract or manually adjust the canvas
 - Wrong communication style? → Switch persona
 
 ---
 
-## 12 Built-In Primitives
+## 12 Built-In Canvases
 
-Available when no pack is installed. Seed set covering core intents:
+Fallback set when no pack is installed. Claude generates minimal layouts from these definitions.
+**Once a registry pack is installed, its canvases replace the built-ins for matching intents.**
 
 builtin_cover (8.0) · builtin_executive_summary (7.5) · builtin_kpi_dashboard (8.5) ·
 builtin_comparison (7.5) · builtin_process (7.0) · builtin_timeline (7.0) ·
 builtin_matrix (7.5) · builtin_insight (8.0) · builtin_section (9.0) ·
 builtin_conclusion (7.0) · builtin_agenda (7.5) · builtin_thankyou (8.0)
 
-Registry packs provide 24+ primitives with richer layouts and embedded SVGs.
+These are the lowest priority tier. See **Resource Resolution** section for the full chain.
 
 ---
 

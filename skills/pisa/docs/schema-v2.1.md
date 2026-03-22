@@ -1,8 +1,8 @@
-# Schema V2.1 — Primitive JSON Format
+# Schema V2.1 — Canvas JSON Format
 
 ## Overview
 
-Every slide decomposes into a primitive: a JSON object that captures what the slide **is**, not how it **looks**.
+Every slide decomposes into a canvas: a JSON object that captures what the slide **is**, not how it **looks**.
 
 V2.1 added three component-level extensions that improved reproduction fidelity from 50% to 85% in testing:
 
@@ -11,9 +11,9 @@ V2.1 added three component-level extensions that improved reproduction fidelity 
 - **`content_data{}`** — structured body content (timelines, org charts, checklists)
 - **`zones[]`** — compound slides with multiple intents
 
-All new fields are optional. V2.0 primitives remain valid V2.1 primitives.
+All new fields are optional. V2.0 canvases remain valid V2.1 canvases.
 
-## Complete Primitive Structure
+## Complete Canvas Structure
 
 ```json
 {
@@ -38,12 +38,12 @@ All new fields are optional. V2.0 primitives remain valid V2.1 primitives.
 }
 ```
 
-### Primitive Resolution Order
+### Canvas Resolution Order
 
-When generating slides, Claude selects primitives using this priority:
+When generating slides, Claude selects canvases using this priority:
 
 1. **`local`** — extracted from the user's own deck this session. Always preferred.
-2. **`override`** — registry primitives the user has modified. Second priority.
+2. **`override`** — registry canvases the user has modified. Second priority.
 3. **`registry`** — installed from packs. Fallback.
 
 Within the same origin tier, higher `quality_score` wins.

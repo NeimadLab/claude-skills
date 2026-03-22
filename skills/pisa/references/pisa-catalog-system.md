@@ -1,8 +1,8 @@
-# PISA Primitive Catalog System
+# PISA Canvas Catalog System
 
 ## Purpose
 
-The catalog provides a visual, filterable interface to the primitive library. Instead
+The catalog provides a visual, filterable interface to the canvas library. Instead
 of reading JSON coordinates, users see rendered thumbnails and filter by intent, quality,
 tag, source deck, or layout type.
 
@@ -13,26 +13,26 @@ tag, source deck, or layout type.
 ```
 ┌──────────────────────────────────────────────┐
 │  Catalog Index (catalog_index.json)          │
-│  ├── Per-primitive: id, intent, quality,     │
+│  ├── Per-canvas: id, intent, quality,     │
 │  │   layout, tags, thumbnail path, status    │
 │  └── Aggregates: intent distribution,        │
 │      quality histogram, total count          │
 ├──────────────────────────────────────────────┤
 │  Thumbnails (data/thumbnails/)               │
-│  ├── {primitive_id}.svg (1920x1080)          │
-│  └── {primitive_id}_thumb.svg (480x270)      │
+│  ├── {canvas_id}.svg (1920x1080)          │
+│  └── {canvas_id}_thumb.svg (480x270)      │
 ├──────────────────────────────────────────────┤
 │  Multi-theme Previews (data/previews/)       │
-│  ├── {primitive_id}_corporate.svg            │
-│  ├── {primitive_id}_light.svg                │
-│  └── {primitive_id}_dark.svg                 │
+│  ├── {canvas_id}_corporate.svg            │
+│  ├── {canvas_id}_light.svg                │
+│  └── {canvas_id}_dark.svg                 │
 └──────────────────────────────────────────────┘
 ```
 
 ## Catalog Index
 
 Rebuilt on every library mutation (add, version, remove). Lightweight JSON index
-that can be loaded without parsing every primitive.
+that can be loaded without parsing every canvas.
 
 ```python
 import json, os, datetime
@@ -48,7 +48,7 @@ def rebuild_catalog_index(library_path="pisa_library.json",
     intent_dist = {}
     quality_buckets = {"excellent": 0, "good": 0, "fair": 0, "draft": 0}
 
-    for prim in library["primitives"]:
+    for prim in library["canvases"]:
         pid = prim["id"]
         q = prim.get("quality_score", 0)
         intent = prim["intent"]
@@ -83,7 +83,7 @@ def rebuild_catalog_index(library_path="pisa_library.json",
     index = {
         "catalog_version": 1,
         "rebuilt_at": datetime.datetime.now().isoformat(),
-        "total_primitives": len(entries),
+        "total_canvases": len(entries),
         "intent_distribution": intent_dist,
         "quality_distribution": quality_buckets,
         "entries": entries,
@@ -103,14 +103,14 @@ Two sizes: full (1920x1080) for detail view, small (480x270) for grid browsing.
 from SVG string import Image
 import subprocess, os
 
-def generate_thumbnails(primitive, theme, thumbnail_dir="data/thumbnails"):
-    """Generate full + small thumbnails for a primitive."""
+def generate_thumbnails(canvas, theme, thumbnail_dir="data/thumbnails"):
+    """Generate full + small thumbnails for a canvas."""
     os.makedirs(thumbnail_dir, exist_ok=True)
-    pid = primitive["id"]
+    pid = canvas["id"]
 
     # 1. Render to PPTX
     tmp_pptx = f"/tmp/pisa_thumb_{pid}.pptx"
-    render_data = json.dumps({"primitive": primitive, "theme": theme})
+    render_data = json.dumps({"canvas": canvas, "theme": theme})
     render_file = f"/tmp/pisa_render_{pid}.json"
     with open(render_file, "w") as f:
         f.write(render_data)
@@ -154,17 +154,17 @@ def generate_thumbnails(primitive, theme, thumbnail_dir="data/thumbnails"):
 
 ## Multi-Theme Preview
 
-Render a primitive in multiple themes for side-by-side comparison.
+Render a canvas in multiple themes for side-by-side comparison.
 
 ```python
-def generate_multi_theme_preview(primitive, themes_dict, preview_dir="data/previews"):
-    """Render a primitive in each theme. themes_dict = {"name": theme_json, ...}"""
+def generate_multi_theme_preview(canvas, themes_dict, preview_dir="data/previews"):
+    """Render a canvas in each theme. themes_dict = {"name": theme_json, ...}"""
     os.makedirs(preview_dir, exist_ok=True)
-    pid = primitive["id"]
+    pid = canvas["id"]
     results = {}
 
     for theme_name, theme in themes_dict.items():
-        render_data = json.dumps({"primitive": primitive, "theme": theme})
+        render_data = json.dumps({"canvas": canvas, "theme": theme})
         render_file = f"/tmp/pisa_preview_{pid}_{theme_name}.json"
         tmp_pptx = f"/tmp/pisa_preview_{pid}_{theme_name}.pptx"
 
@@ -241,7 +241,7 @@ python3 scripts/library/catalog.py query --intent kpi_dashboard
 # Browse high-quality only
 python3 scripts/library/catalog.py query --min-quality 7.0
 
-# Generate multi-theme previews for a primitive
+# Generate multi-theme previews for a canvas
 python3 scripts/library/catalog.py preview --id prim_deck_3_a8f2 --themes corporate,light,dark
 
 # Full catalog summary

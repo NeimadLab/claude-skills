@@ -7,7 +7,6 @@
       "id": "corporate-essentials",
       "name": "Corporate Essentials",
       "description": "Full 21-intent coverage",
-      "primitives": 24,
       "intents_covered": 20,
       "quality_min": 7.0,
       "themes_included": [
@@ -15,13 +14,13 @@
         "corporate_light"
       ],
       "url": "packs/corporate-essentials.json",
-      "version": "1.0"
+      "version": "1.0",
+      "canvases": 24
     },
     {
       "id": "finance-reporting",
       "name": "Finance & Reporting",
       "description": "CFO decks, quarterly reviews",
-      "primitives": 14,
       "intents_covered": 8,
       "quality_min": 6.5,
       "themes_included": [
@@ -29,13 +28,13 @@
         "corporate_light"
       ],
       "url": "packs/finance-reporting.json",
-      "version": "1.0"
+      "version": "1.0",
+      "canvases": 14
     },
     {
       "id": "strategy-consulting",
       "name": "Strategy Consulting",
       "description": "McKinsey/BCG-style deliverables",
-      "primitives": 12,
       "intents_covered": 11,
       "quality_min": 7.0,
       "themes_included": [
@@ -43,13 +42,13 @@
         "corporate_light"
       ],
       "url": "packs/strategy-consulting.json",
-      "version": "1.0"
+      "version": "1.0",
+      "canvases": 12
     },
     {
       "id": "startup-pitch",
       "name": "Startup Pitch Deck",
       "description": "Investor pitch, demo day, Series A",
-      "primitives": 11,
       "intents_covered": 8,
       "quality_min": 7.0,
       "themes_included": [
@@ -57,7 +56,8 @@
         "corporate_light"
       ],
       "url": "packs/startup-pitch.json",
-      "version": "1.0"
+      "version": "1.0",
+      "canvases": 11
     }
   ],
   "schema_version": "2.1",
@@ -65,42 +65,42 @@
     {
       "id": "strategy",
       "name": "Strategy Consulting",
-      "description": "McKinsey/BCG \u2014 data-rich, Pyramid, MECE",
+      "description": "McKinsey/BCG — data-rich, Pyramid, MECE",
       "url": "personas/strategy.json",
       "version": "1.0"
     },
     {
       "id": "executive",
       "name": "Executive Briefing",
-      "description": "Board / C-Suite \u2014 SCR, 4-8 slides",
+      "description": "Board / C-Suite — SCR, 4-8 slides",
       "url": "personas/executive.json",
       "version": "1.0"
     },
     {
       "id": "keynote",
       "name": "Conference Keynote",
-      "description": "TED-style \u2014 story arc, no bullets",
+      "description": "TED-style — story arc, no bullets",
       "url": "personas/keynote.json",
       "version": "1.0"
     },
     {
       "id": "startup",
       "name": "Startup Pitch Deck",
-      "description": "Seed/Series A \u2014 Problem-Solution-Ask",
+      "description": "Seed/Series A — Problem-Solution-Ask",
       "url": "personas/startup.json",
       "version": "1.0"
     },
     {
       "id": "technical",
       "name": "Technical Review",
-      "description": "Architecture/sprint \u2014 diagrams first",
+      "description": "Architecture/sprint — diagrams first",
       "url": "personas/technical.json",
       "version": "1.0"
     },
     {
       "id": "sales",
       "name": "Sales & Marketing",
-      "description": "Pitch/proposal \u2014 benefit-led, CTA",
+      "description": "Pitch/proposal — benefit-led, CTA",
       "url": "personas/sales.json",
       "version": "1.0"
     },

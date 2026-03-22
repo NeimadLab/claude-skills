@@ -345,11 +345,11 @@ def check_colour_consistency(slide, slide_num, theme=None):
 
 
 # ═══════════════════════════════════════════════════
-# V2.1 PRIMITIVE QA (validates the primitive JSON before rendering)
+# V2.1 CANVAS QA (validates the canvas JSON before rendering)
 # ═══════════════════════════════════════════════════
 
-def qa_primitive(prim, slide_num=0):
-    """Validate a V2.1 primitive JSON for completeness. Returns list of issues."""
+def qa_canvas(prim, slide_num=0):
+    """Validate a V2.1 canvas JSON for completeness. Returns list of issues."""
     issues = []
     
     # Check schema version
@@ -393,7 +393,7 @@ def qa_primitive(prim, slide_num=0):
     if si and not prim.get("zones"):
         issues.append({
             "slide": slide_num, "check": "compound_no_zones", "severity": "warning",
-            "shape": "primitive",
+            "shape": "canvas",
             "detail": f"Has secondary_intent '{si}' but no zones[] to map components to intents",
             "fix": "Add zones[] with zone_intent and component_indices for each region."
         })
@@ -402,7 +402,7 @@ def qa_primitive(prim, slide_num=0):
     if not prim.get("layout_variant"):
         issues.append({
             "slide": slide_num, "check": "missing_layout_variant", "severity": "info",
-            "shape": "primitive",
+            "shape": "canvas",
             "detail": "No layout_variant — generic rendering will be used",
             "fix": "Add layout_variant (e.g. 'grid_alternating_dark_light') for pattern-specific rendering."
         })

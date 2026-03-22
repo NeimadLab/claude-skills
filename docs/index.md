@@ -11,15 +11,9 @@ Open-source expertise modules you can drop into any Claude Project.
 
 ### PISA — Presentation Intelligence
 
-Analyze, generate, retheme, and review professional PowerPoint decks. 8 personas, 61 primitives, 3 themes, schema V2.1.
+Analyze, generate, retheme, and review professional PowerPoint decks. 8 personas, 61 canvases, 3 themes, schema V2.1.
 
 [Get started →](https://github.com/NeimadLab/claude-skills/tree/main/skills/pisa)
-
-### Loom — Persistent AI Workspace Memory
-
-Persistent, structured project memory that transfers across AI tools. Search decisions, log context, generate handoff summaries, and maintain continuity across sessions and models. MCP-native.
-
-[Get started →](https://github.com/NeimadLab/claude-skills/tree/main/skills/loom)
 
 ## How Skills Work
 

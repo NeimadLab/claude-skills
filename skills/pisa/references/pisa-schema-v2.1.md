@@ -1,4 +1,4 @@
-# PISA Primitive Schema V2.1
+# PISA Canvas Schema V2.1
 
 ## What Changed from V2.0
 
@@ -10,7 +10,7 @@
 | Compound slides | Single `intent` forced | `secondary_intent` + `zones[]` for multi-intent slides |
 | Schema version | 2 | 2.1 |
 
-All new fields are **optional** — V2.0 primitives remain valid V2.1 primitives.
+All new fields are **optional** — V2.0 canvases remain valid V2.1 canvases.
 
 ---
 
@@ -108,7 +108,7 @@ Use when `role` = `body` but the content has internal structure that shouldn't b
 
 ---
 
-## Complete Primitive Schema V2.1
+## Complete Canvas Schema V2.1
 
 ```json
 {
