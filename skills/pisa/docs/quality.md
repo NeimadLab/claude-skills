@@ -30,7 +30,7 @@ These run by reading the generated PPTX back with python-pptx. No LibreOffice ne
 | `duplicate_title` | 🟡 Warning | Two slides with same title |
 | `narrative_arc` | ⚪ Info | Missing opening or closing slide |
 
-**V2.1 additional checks** (on primitive JSON before rendering):
+**V2.1 additional checks** (on template JSON before rendering):
 - KPI cards missing `kpi{}` → warning
 - Components missing `visual{}` → info
 - Structured body without `content_data{}` → info
@@ -46,7 +46,7 @@ These run by reading the generated PPTX back with python-pptx. No LibreOffice ne
 4. Active voice
 5. Unique across the deck
 
-## Primitive Quality Scores
+## Template Quality Scores
 
 - **≥ 8.0** → Approved — ready for production use
 - **4.0–7.9** → Candidate — usable but may need refinement

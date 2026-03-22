@@ -1,6 +1,6 @@
 # Personas — Communication Strategies
 
-A persona controls **how** the deck communicates. It is not a theme (colors/fonts) — it is a generation strategy that affects primitive selection, density limits, title style, narrative framework, and visual ratio.
+A persona controls **how** the deck communicates. It is not a theme (colors/fonts) — it is a generation strategy that affects template selection, density limits, title style, narrative framework, and visual ratio.
 
 Selecting a persona before generation is the single highest-impact decision for deck quality.
 

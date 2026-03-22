@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "loom": {
-      "command": "loom",
-      "args": ["mcp", "serve", "--transport", "stdio"],
-      "env": {}
-    }
-  }
-}

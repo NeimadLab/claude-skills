@@ -1,4 +1,7 @@
 {
+  "_theme_id": "corporate_dark",
+  "_version": "1.1.0",
+  "_source": "registry",
   "token.color.primary": "0F2137",
   "token.color.secondary": "1A5FB4",
   "token.color.accent": "F97316",

@@ -1,0 +1,305 @@
+<svg viewBox="0 0 984 487" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(0,0)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="12.0" y="37.8" width="144.0" height="21.6" fill="#1f2937" rx="4"/><text x="84.0" y="49.7" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="5.0" font-weight="bold" fill="#e5e7eb">Strategic Review &amp; Recommendations</text><rect x="12.0" y="57.4" width="50.4" height="2.5" fill="#F97316" rx="1"/>
+<rect x="12.0" y="64.8" width="132.0" height="10.8" fill="#1f2937" rx="3" opacity="0.85"/><text x="78.0" y="70.7" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="3.3" fill="#e5e7eb">Client Name · Engagement Phase</text>
+<rect x="156.0" y="13.5" width="72.0" height="108.0" fill="#111827" stroke="#374151" stroke-width="0.8" rx="5"/>
+<circle cx="210.0" cy="43.7" r="5.8" fill="#F97316" opacity="0.25"/>
+<polygon points="160,105 174,51 192,105" fill="#9ca3af" opacity="0.15"/>
+<polygon points="181,105 199,62 217,105" fill="#9ca3af" opacity="0.1"/>
+<text x="192.0" y="112.9" text-anchor="middle" font-family="monospace" font-size="7" fill="#9ca3af" opacity="0.3">image</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">cover · columns · columns_uniform · Q:8.5</text>
+</g>
+<text x="120" y="149" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">cover (Q:8.5)</text>
+<g transform="translate(248,0)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Three levers can unlock $4.2M in annual savings</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="9.6" y="21.6" width="220.8" height="105.3" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="9.6" y="25.6" width="3" height="97.3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="22.8" y="41.3" font-family="Arial" font-size="5.5" fill="#1f2937">1. Procurement consolidation (est. $1.8M) 2. Process automation (est. $1.6M)</text>
+<text x="22.8" y="54.5" font-family="Arial" font-size="5.5" fill="#1f2937">3. Workforce optimization (est. $0.8M)</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">executive_summary · stacked · stacked_uniform · Q:8.5</text>
+</g>
+<text x="368" y="149" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">executive_summary (Q:8.5)</text>
+<g transform="translate(496,0)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="2.7" width="220.8" height="12.2" fill="#1f2937" rx="4"/><text x="120.0" y="9.4" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="6.7" font-weight="bold" fill="#e5e7eb">Key performance indicators trending above target</text><rect x="9.6" y="12.9" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="9.6" y="18.9" width="67.2" height="29.7" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="6"/>
+<rect x="9.6" y="18.9" width="67.2" height="3.5" fill="#F97316" rx="6"/>
+<rect x="9.6" y="20.4" width="67.2" height="2" fill="#F97316"/>
+<circle cx="62.0" cy="23.4" r="2.1" fill="#F97316" opacity="0.12"/>
+<text x="62.0" y="25.4" text-anchor="middle" font-size="5" fill="#F97316" opacity="0.4">dollar</text>
+<text x="43.2" y="27.8" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="8.9" font-weight="bold" fill="#1f2937">$42.6M</text>
+<rect x="26.4" y="31.8" width="33.6" height="1.5" fill="#F97316" rx="0.75" opacity="0.25"/>
+<text x="43.2" y="34.0" text-anchor="middle" font-family="Arial" font-size="1.5" fill="#F97316" letter-spacing="1.5">REVENUE</text>
+<polyline points="28.1,43.0 33.1,42.3 38.2,43.3 43.2,41.6 48.2,42.6 53.3,42.3 58.3,40.3" fill="none" stroke="#F97316" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+<path d="M68,46L68,40L65,43M68,40L71,43" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<rect x="86.4" y="18.9" width="67.2" height="29.7" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="6"/>
+<rect x="86.4" y="18.9" width="67.2" height="3.5" fill="#F97316" rx="6"/>
+<rect x="86.4" y="20.4" width="67.2" height="2" fill="#F97316"/>
+<circle cx="138.8" cy="23.4" r="2.1" fill="#F97316" opacity="0.12"/>
+<text x="138.8" y="25.4" text-anchor="middle" font-size="5" fill="#9ca3af" opacity="0.4">bar-ch</text>
+<text x="120.0" y="27.8" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="8.9" font-weight="bold" fill="#e5e7eb">$10.3M</text>
+<rect x="103.2" y="31.8" width="33.6" height="1.5" fill="#9ca3af" rx="0.75" opacity="0.25"/>
+<text x="120.0" y="34.0" text-anchor="middle" font-family="Arial" font-size="1.5" fill="#9ca3af" letter-spacing="1.5">EBITDA</text>
+<polyline points="104.9,43.3 109.9,42.3 115.0,43.1 120.0,41.6 125.0,41.8 130.1,42.3 135.1,40.3" fill="none" stroke="#F97316" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+<path d="M145,46L145,40L142,43M145,40L148,43" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<rect x="163.2" y="18.9" width="67.2" height="29.7" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="6"/>
+<rect x="163.2" y="18.9" width="67.2" height="3.5" fill="#F97316" rx="6"/>
+<rect x="163.2" y="20.4" width="67.2" height="2" fill="#F97316"/>
+<circle cx="215.6" cy="23.4" r="2.1" fill="#F97316" opacity="0.12"/>
+<text x="215.6" y="25.4" text-anchor="middle" font-size="5" fill="#F97316" opacity="0.4">percen</text>
+<text x="196.8" y="27.8" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="8.9" font-weight="bold" fill="#1f2937">24.1%</text>
+<rect x="180.0" y="31.8" width="33.6" height="1.5" fill="#F97316" rx="0.75" opacity="0.25"/>
+<text x="196.8" y="34.0" text-anchor="middle" font-family="Arial" font-size="1.5" fill="#F97316" letter-spacing="1.5">MARGIN</text>
+<polyline points="181.7,43.3 186.7,42.4 191.8,43.3 196.8,41.6 201.8,42.2 206.9,42.4 211.9,40.3" fill="none" stroke="#F97316" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+<path d="M222,46L222,40L219,43M222,40L225,43" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<rect x="9.6" y="59.4" width="67.2" height="29.7" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="6"/>
+<rect x="9.6" y="59.4" width="67.2" height="3.5" fill="#F97316" rx="6"/>
+<rect x="9.6" y="60.9" width="67.2" height="2" fill="#F97316"/>
+<circle cx="62.0" cy="63.9" r="2.1" fill="#F97316" opacity="0.12"/>
+<text x="62.0" y="65.9" text-anchor="middle" font-size="5" fill="#9ca3af" opacity="0.4">piggy-</text>
+<text x="43.2" y="68.3" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="8.9" font-weight="bold" fill="#e5e7eb">$2.1M</text>
+<rect x="26.4" y="72.3" width="33.6" height="1.5" fill="#9ca3af" rx="0.75" opacity="0.25"/>
+<text x="43.2" y="74.5" text-anchor="middle" font-family="Arial" font-size="1.5" fill="#9ca3af" letter-spacing="1.5">SAVINGS</text>
+<polyline points="28.1,83.8 33.1,82.8 38.2,83.6 43.2,82.1 48.2,82.3 53.3,82.8 58.3,80.8" fill="none" stroke="#F97316" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+<path d="M68,86L68,80L65,83M68,80L71,83" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<rect x="86.4" y="59.4" width="67.2" height="29.7" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="6"/>
+<rect x="86.4" y="59.4" width="67.2" height="3.5" fill="#F97316" rx="6"/>
+<rect x="86.4" y="60.9" width="67.2" height="2" fill="#F97316"/>
+<circle cx="138.8" cy="63.9" r="2.1" fill="#F97316" opacity="0.12"/>
+<text x="138.8" y="65.9" text-anchor="middle" font-size="5" fill="#F97316" opacity="0.4">scale</text>
+<text x="120.0" y="68.3" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="8.9" font-weight="bold" fill="#1f2937">1.8x</text>
+<rect x="103.2" y="72.3" width="33.6" height="1.5" fill="#F97316" rx="0.75" opacity="0.25"/>
+<text x="120.0" y="74.5" text-anchor="middle" font-family="Arial" font-size="1.5" fill="#F97316" letter-spacing="1.5">LEVERAGE</text>
+<polyline points="104.9,83.8 109.9,82.8 115.0,83.6 120.0,82.1 125.0,82.4 130.1,82.8 135.1,80.8" fill="none" stroke="#F97316" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+<rect x="163.2" y="59.4" width="67.2" height="29.7" fill="#F97316" stroke="#374151" stroke-width="0.8" rx="6"/>
+<rect x="163.2" y="59.4" width="67.2" height="3.5" fill="#F97316" rx="6"/>
+<rect x="163.2" y="60.9" width="67.2" height="2" fill="#F97316"/>
+<circle cx="215.6" cy="63.9" r="2.1" fill="#F97316" opacity="0.12"/>
+<text x="215.6" y="65.9" text-anchor="middle" font-size="5" fill="#1f2937" opacity="0.4">zap</text>
+<text x="196.8" y="68.3" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="8.9" font-weight="bold" fill="#1f2937">$8.4M</text>
+<rect x="180.0" y="72.3" width="33.6" height="1.5" fill="#1f2937" rx="0.75" opacity="0.25"/>
+<text x="196.8" y="74.5" text-anchor="middle" font-family="Arial" font-size="1.5" fill="#1f2937" letter-spacing="1.5">ROI</text>
+<polyline points="181.7,83.6 186.7,82.8 191.8,83.8 196.8,82.1 201.8,82.9 206.9,82.8 211.9,80.8" fill="none" stroke="#F97316" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+<path d="M222,86L222,80L219,83M222,80L225,83" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<rect x="9.6" y="97.2" width="220.8" height="29.7" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="9.6" y="101.2" width="3" height="21.7" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="22.8" y="110.8" font-family="Arial" font-size="5.5" fill="#1f2937">Source: Company financials, Q3 2026</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">kpi_dashboard · grid · grid_3x2_alternating · Q:9.0</text>
+</g>
+<text x="616" y="149" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">kpi_dashboard (Q:9.0)</text>
+<g transform="translate(744,0)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">APAC revenue grew 18% YoY, outpacing all other regions</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="9.6" y="21.6" width="139.2" height="102.6" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="5"/>
+<line x1="26.3" y1="107.8" x2="132.1" y2="107.8" stroke="#374151" stroke-width="0.7"/>
+<line x1="26.3" y1="89.3" x2="132.1" y2="89.3" stroke="#374151" stroke-width="0.3" stroke-dasharray="3,3"/>
+<line x1="26.3" y1="70.8" x2="132.1" y2="70.8" stroke="#374151" stroke-width="0.3" stroke-dasharray="3,3"/>
+<line x1="26.3" y1="52.4" x2="132.1" y2="52.4" stroke="#374151" stroke-width="0.3" stroke-dasharray="3,3"/>
+<rect x="29.1" y="77.9" width="9.4" height="29.9" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="44.3" y="59.9" width="9.4" height="47.9" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="59.4" y="69.2" width="9.4" height="38.6" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="74.5" y="49.3" width="9.4" height="58.5" fill="#F97316" rx="2" opacity="0.8"/>
+<rect x="89.6" y="64.6" width="9.4" height="43.2" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="104.7" y="55.9" width="9.4" height="51.9" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="119.8" y="46.6" width="9.4" height="61.2" fill="#F97316" rx="2" opacity="0.8"/>
+<text x="79.2" y="120.2" text-anchor="middle" font-family="monospace" font-size="7" fill="#9ca3af" opacity="0.4">chart</text>
+<rect x="156.0" y="21.6" width="74.4" height="102.6" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="156.0" y="25.6" width="3" height="94.6" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="168.0" y="40.8" font-family="Arial" font-size="1.9" fill="#1f2937">Key drivers: pricing optimization, new market entry, product mix. Source:</text>
+<text x="168.0" y="53.7" font-family="Arial" font-size="1.9" fill="#1f2937">Regional reports Q3 2026</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">chart_driven · columns · columns_uniform · Q:8.0</text>
+</g>
+<text x="864" y="149" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">chart_driven (Q:8.0)</text>
+<g transform="translate(0,165)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Impact-effort matrix reveals three quick wins</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="14.4" y="23.0" width="100.8" height="48.6" fill="#F97316" stroke="#374151" stroke-width="0.8" rx="5"/>
+<text x="26.4" y="36.6" font-family="Arial" font-size="2.5" fill="#1f2937">HIGH IMPACT / LOW EFFORT: Quick wins</text>
+<rect x="124.8" y="23.0" width="100.8" height="48.6" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<text x="136.8" y="36.6" font-family="Arial" font-size="2.5" fill="#1f2937">HIGH IMPACT / HIGH EFFORT: Major projects</text>
+<rect x="14.4" y="75.6" width="100.8" height="48.6" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="5"/>
+<text x="26.4" y="89.2" font-family="Arial" font-size="2.5" fill="#e5e7eb">LOW IMPACT / LOW EFFORT: Fill-ins</text>
+<rect x="124.8" y="75.6" width="100.8" height="48.6" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<text x="136.8" y="89.2" font-family="Arial" font-size="2.5" fill="#1f2937">LOW IMPACT / HIGH EFFORT: Deprioritize</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">matrix_2x2 · grid · grid_2x2_impact_effort · Q:8.0</text>
+</g>
+<text x="120" y="314" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">matrix_2x2 (Q:8.0)</text>
+<g transform="translate(248,165)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Option B delivers higher NPV with moderate execution risk</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="9.6" y="23.0" width="67.2" height="101.2" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="9.6" y="27.0" width="3" height="93.2" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="21.6" y="41.9" font-family="Arial" font-size="1.7" fill="#1f2937">Option A: Conservative. NPV $12M. Low risk. 18-month timeline.</text>
+<rect x="86.4" y="23.0" width="67.2" height="101.2" fill="#F97316" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="86.4" y="27.0" width="3" height="93.2" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="98.4" y="41.9" font-family="Arial" font-size="1.7" fill="#1f2937">Option B: Balanced. NPV $22M. Moderate risk. 24-month timeline.</text>
+<rect x="163.2" y="23.0" width="67.2" height="101.2" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="163.2" y="27.0" width="3" height="93.2" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="175.2" y="41.9" font-family="Arial" font-size="1.7" fill="#1f2937">Option C: Aggressive. NPV $31M. High risk. 36-month timeline.</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">comparison_columns · columns · columns_uniform · Q:8.0</text>
+</g>
+<text x="368" y="314" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">comparison_columns (Q:8.0)</text>
+<g transform="translate(496,165)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Implementation follows four distinct phases</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="7.2" y="27.0" width="52.8" height="94.5" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="11.2" y="27.0" width="44.8" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="19.2" y="44.7" font-family="Arial" font-size="1.3" fill="#1f2937">Phase 1: Diagnostic (4 weeks)</text>
+<rect x="64.8" y="27.0" width="52.8" height="94.5" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="68.8" y="27.0" width="44.8" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="76.8" y="44.7" font-family="Arial" font-size="1.3" fill="#e5e7eb">Phase 2: Design (6 weeks)</text>
+<rect x="122.4" y="27.0" width="52.8" height="94.5" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="126.4" y="27.0" width="44.8" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="134.4" y="44.7" font-family="Arial" font-size="1.3" fill="#1f2937">Phase 3: Pilot (8 weeks)</text>
+<rect x="180.0" y="27.0" width="52.8" height="94.5" fill="#F97316" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="184.0" y="27.0" width="44.8" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="192.0" y="44.7" font-family="Arial" font-size="1.3" fill="#1f2937">Phase 4: Scale (12 weeks)</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">linear_process · columns · columns_numbered_phases · Q:7.5</text>
+</g>
+<text x="616" y="314" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">linear_process (Q:7.5)</text>
+<g transform="translate(744,165)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="12.2" fill="#1f2937" rx="4"/><text x="120.0" y="10.7" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="6.7" font-weight="bold" fill="#e5e7eb">Benchmarking reveals performance gaps in three areas</text><rect x="9.6" y="14.2" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="7.2" y="18.9" width="225.6" height="108.0" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="4"/>
+<rect x="8.2" y="19.9" width="223.6" height="18.0" fill="#0F2137" rx="3" opacity="0.9"/>
+<rect x="16.6" y="25.2" width="22.2" height="5.4" fill="#1f2937" rx="1.5" opacity="0.4"/>
+<rect x="53.5" y="25.2" width="22.2" height="5.4" fill="#1f2937" rx="1.5" opacity="0.4"/>
+<rect x="90.5" y="25.2" width="22.2" height="5.4" fill="#1f2937" rx="1.5" opacity="0.4"/>
+<rect x="127.4" y="25.2" width="22.2" height="5.4" fill="#1f2937" rx="1.5" opacity="0.4"/>
+<rect x="164.3" y="25.2" width="22.2" height="5.4" fill="#1f2937" rx="1.5" opacity="0.4"/>
+<rect x="201.3" y="25.2" width="22.2" height="5.4" fill="#1f2937" rx="1.5" opacity="0.4"/>
+<line x1="9.2" y1="55.9" x2="230.8" y2="55.9" stroke="#374151" stroke-width="0.3" opacity="0.25"/>
+<rect x="16.6" y="43.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="51.7" y="43.3" width="25.9" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="92.3" y="43.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="125.5" y="43.3" width="25.9" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="164.3" y="43.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="201.3" y="43.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="8.2" y="55.9" width="223.6" height="18.0" fill="#111827" opacity="0.5"/>
+<line x1="9.2" y1="73.9" x2="230.8" y2="73.9" stroke="#374151" stroke-width="0.3" opacity="0.25"/>
+<rect x="16.6" y="61.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="55.4" y="61.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="88.6" y="61.3" width="25.9" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="129.2" y="61.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="164.3" y="61.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="203.1" y="61.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<line x1="9.2" y1="91.9" x2="230.8" y2="91.9" stroke="#374151" stroke-width="0.3" opacity="0.25"/>
+<rect x="16.6" y="79.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="55.4" y="79.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="92.3" y="79.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="127.4" y="79.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="162.5" y="79.3" width="25.9" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="201.3" y="79.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="8.2" y="91.9" width="223.6" height="18.0" fill="#111827" opacity="0.5"/>
+<line x1="9.2" y1="109.9" x2="230.8" y2="109.9" stroke="#374151" stroke-width="0.3" opacity="0.25"/>
+<rect x="16.6" y="97.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="51.7" y="97.3" width="25.9" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="92.3" y="97.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="129.2" y="97.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="164.3" y="97.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="203.1" y="97.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<line x1="9.2" y1="127.9" x2="230.8" y2="127.9" stroke="#374151" stroke-width="0.3" opacity="0.25"/>
+<rect x="18.4" y="115.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="51.7" y="115.3" width="25.9" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="92.3" y="115.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="129.2" y="115.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="164.3" y="115.3" width="22.2" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<rect x="203.1" y="115.3" width="18.5" height="5.4" fill="#9ca3af" rx="1.5" opacity="0.12"/>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">data_table · stacked · stacked_uniform · Q:7.5</text>
+</g>
+<text x="864" y="314" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">data_table (Q:7.5)</text>
+<g transform="translate(0,330)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Cost reduction bridge shows $4.2M opportunity</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="9.6" y="21.6" width="220.8" height="74.2" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="5"/>
+<line x1="36.1" y1="84.0" x2="203.9" y2="84.0" stroke="#374151" stroke-width="0.7"/>
+<line x1="36.1" y1="70.6" x2="203.9" y2="70.6" stroke="#374151" stroke-width="0.3" stroke-dasharray="3,3"/>
+<line x1="36.1" y1="57.2" x2="203.9" y2="57.2" stroke="#374151" stroke-width="0.3" stroke-dasharray="3,3"/>
+<line x1="36.1" y1="43.9" x2="203.9" y2="43.9" stroke="#374151" stroke-width="0.3" stroke-dasharray="3,3"/>
+<rect x="40.6" y="62.3" width="15.0" height="21.7" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="64.6" y="49.3" width="15.0" height="34.6" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="88.5" y="56.1" width="15.0" height="27.9" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="112.5" y="41.6" width="15.0" height="42.3" fill="#F97316" rx="2" opacity="0.8"/>
+<rect x="136.5" y="52.7" width="15.0" height="31.3" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="160.5" y="46.4" width="15.0" height="37.5" fill="#0F2137" rx="2" opacity="0.8"/>
+<rect x="184.4" y="39.7" width="15.0" height="44.3" fill="#F97316" rx="2" opacity="0.8"/>
+<text x="120.0" y="91.8" text-anchor="middle" font-family="monospace" font-size="7" fill="#9ca3af" opacity="0.4">chart</text>
+<rect x="9.6" y="99.9" width="220.8" height="27.0" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="9.6" y="103.9" width="3" height="19.0" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="22.8" y="113.5" font-family="Arial" font-size="5.5" fill="#1f2937">Source: Process mapping and FTE analysis, September 2026</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">chart_driven · stacked · stacked_uniform · Q:8.0</text>
+</g>
+<text x="120" y="479" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">chart_driven (Q:8.0)</text>
+<g transform="translate(248,330)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Transformation roadmap spans three waves over 18 months</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="9.6" y="23.0" width="67.2" height="33.8" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="13.6" y="23.0" width="59.2" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="21.6" y="36.6" font-family="Arial" font-size="1.7" fill="#1f2937">Wave 1: Quick wins (0-6 months)</text>
+<rect x="86.4" y="23.0" width="67.2" height="33.8" fill="#1f2937" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="90.4" y="23.0" width="59.2" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="98.4" y="36.6" font-family="Arial" font-size="1.7" fill="#e5e7eb">Wave 2: Core (6-12 months)</text>
+<rect x="163.2" y="23.0" width="67.2" height="33.8" fill="#F97316" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="167.2" y="23.0" width="59.2" height="3" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="175.2" y="36.6" font-family="Arial" font-size="1.7" fill="#1f2937">Wave 3: Scale (12-18 months)</text>
+<rect x="9.6" y="64.8" width="220.8" height="59.4" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="9.6" y="68.8" width="3" height="51.4" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="22.8" y="78.4" font-family="Arial" font-size="5.5" fill="#1f2937">Governance: Monthly SteerCo, weekly workstream leads, quarterly board update</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">timeline · rows · rows_uniform · Q:7.5</text>
+</g>
+<text x="368" y="479" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">timeline (Q:7.5)</text>
+<g transform="translate(496,330)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="9.6" y="4.0" width="220.8" height="13.5" fill="#1f2937" rx="4"/><text x="120.0" y="11.5" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7.4" font-weight="bold" fill="#e5e7eb">Three decisions required from leadership this month</text><rect x="9.6" y="15.6" width="77.3" height="2.5" fill="#F97316" rx="1"/>
+<rect x="14.4" y="23.0" width="211.2" height="101.2" fill="#0F2137" stroke="#374151" stroke-width="0.8" rx="5"/>
+<rect x="14.4" y="27.0" width="3" height="93.2" fill="#F97316" rx="1.5" opacity="0.6"/>
+<text x="27.1" y="41.9" font-family="Arial" font-size="5.3" fill="#1f2937">1. Approve Wave 1 budget ($1.2M) 2. Assign executive sponsor for</text>
+<text x="27.1" y="54.6" font-family="Arial" font-size="5.3" fill="#1f2937">transformation program 3. Schedule diagnostic kickoff for October 7</text>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">conclusion_cta · stacked · stacked_uniform · Q:7.5</text>
+</g>
+<text x="616" y="479" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">conclusion_cta (Q:7.5)</text>
+<g transform="translate(744,330)">
+<rect width="240" height="135" fill="#111827" rx="6"/>
+<rect x="0.5" y="0.5" width="239" height="134" fill="none" stroke="#374151" stroke-width="1" rx="6"/>
+<rect x="0" y="0" width="240" height="3" fill="#F97316" rx="6"/>
+<rect x="0" y="1.5" width="240" height="1.5" fill="#F97316"/>
+<rect x="24.0" y="51.3" width="192.0" height="20.2" fill="#1f2937" rx="4"/><text x="120.0" y="62.4" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="6.7" font-weight="bold" fill="#e5e7eb">Detailed Analysis</text><rect x="24.0" y="69.5" width="67.2" height="2.5" fill="#F97316" rx="1"/>
+<text x="232" y="129" text-anchor="end" font-family="monospace" font-size="7.5" fill="#9ca3af" opacity="0.45">section_divider · single · single_uniform · Q:9.0</text>
+</g>
+<text x="864" y="479" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b7280">section_divider (Q:9.0)</text>
+</svg>

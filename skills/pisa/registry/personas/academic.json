@@ -7,7 +7,8 @@
   },
   "density": {
     "max_words_body": 75,
-    "max_bullets": 5
+    "max_bullets": 5,
+    "max_content_shapes": 6
   },
   "titles": {
     "style": "findings_focused"
@@ -34,5 +35,10 @@
   "typical_slide_count": {
     "conference": "12-20",
     "thesis": "40-60"
+  },
+  "version": "1.1.0",
+  "source": {
+    "origin": "registry",
+    "type": "persona"
   }
 }

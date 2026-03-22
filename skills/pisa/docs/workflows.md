@@ -4,13 +4,13 @@ PISA detects which workflow to run based on the user's request.
 
 ## Workflow A — Analyze & Extract
 
-**Triggers:** "analyze this deck", "extract primitives", upload PPTX/PDF/image
+**Triggers:** "analyze this deck", "extract templates", upload PPTX/PDF/image
 
 1. Detect input type (PPTX → Strategy 1, image/PDF → Strategy 2)
 2. Extract design system (colors, fonts → theme tokens)
 3. For each slide: classify intent, map components, assign roles, estimate positions
-4. Build V2.1 primitive JSON with `kpi{}`, `visual{}`, `content_data{}`
-5. Generate SVG preview per primitive
+4. Build V2.1 template JSON with `kpi{}`, `visual{}`, `content_data{}`
+5. Generate SVG preview per template
 6. Present results with quality scores
 
 **Two-pass extraction** for complex slides:
@@ -23,8 +23,11 @@ PISA detects which workflow to run based on the user's request.
 
 1. Detect persona (explicit or inferred from context)
 2. Plan slide sequence (narrative arc based on persona)
-3. For each slide: select best primitive from library by intent
-4. Fill primitive with user content, enforce density limits
+3. For each slide: resolve the best template using priority order:
+   - **LOCAL** (extracted from user's deck) → highest priority
+   - **OVERRIDE** (user-modified registry template) → second
+   - **REGISTRY** (installed from packs) → fallback
+4. Fill template with user content, enforce density limits
 5. Resolve theme tokens → concrete values
 6. Render via pptxgenjs → PPTX file
 7. Run programmatic QA
@@ -35,7 +38,7 @@ PISA detects which workflow to run based on the user's request.
 **Triggers:** "retheme to dark mode", "apply the finance theme"
 
 1. Load the target theme JSON
-2. Walk all primitives in the deck
+2. Walk all templates in the deck
 3. Re-resolve all token references against the new theme
 4. Re-render → new PPTX with same content, different appearance
 
@@ -51,20 +54,23 @@ PISA detects which workflow to run based on the user's request.
 
 ## Workflow E — Library & Catalog
 
-**Triggers:** "show my primitives", "browse KPI layouts", "export library"
+**Triggers:** "show my templates", "browse KPI layouts", "export library"
 
 - **Browse:** Filter by intent/quality/layout → SVG grid via show_widget
-- **Preview:** Compare same primitive across themes (side-by-side SVG)
+- **Preview:** Compare same template across themes (side-by-side SVG)
 - **Import:** Upload pisa_library.json → restore full session library
 - **Export:** "Export my library" → downloadable JSON
-- **Details:** "Show primitive X" → SVG + full metadata
+- **Details:** "Show template X" → SVG + full metadata
 
 ## Workflow F — Registry
 
 **Triggers:** "install the finance pack", "list available packs", "check for updates"
 
-- **List:** Fetch registry.json → display available packs/themes/personas
-- **Install pack:** Fetch pack JSON → merge primitives into session library
+PISA ships with a built-in registry URL — no user setup required. To use a custom registry, say: "Use registry at https://..."
+
+- **List:** Fetch registry.json → display available packs/themes/styles/personas
+- **Install pack:** Fetch pack JSON → merge templates (tagged `origin: "registry"`) into session library
 - **Install theme:** Fetch theme JSON → set as active theme
+- **Install style:** Fetch style JSON → apply visual rules to all templates
 - **Install persona:** Fetch persona JSON → apply rules to generation
 - **Update:** Compare installed versions with registry → offer to re-fetch

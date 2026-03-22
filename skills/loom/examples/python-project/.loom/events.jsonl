@@ -1,3 +1,0 @@
-{"event_type":"workspace_initialized","timestamp":"2026-03-22T10:00:00Z","actor":null,"session_id":null,"data":{"project_type":"python","identity":"example_abc123def456"}}
-{"event_type":"memory_written","timestamp":"2026-03-22T10:05:00Z","actor":"claude-code","session_id":null,"data":{"entry_id":"01abc","type":"decision"}}
-{"event_type":"decision_logged","timestamp":"2026-03-22T10:06:00Z","actor":"claude-code","session_id":null,"data":{"entry_id":"02def","decision":"Use JWT for auth"}}

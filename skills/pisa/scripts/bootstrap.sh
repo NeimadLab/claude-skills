@@ -62,8 +62,8 @@ ok "pptxgenjs"
 # ── Step 5: Validate Python modules ──
 log "Step 5/7: Validating Python modules..."
 cd "$PISA_ROOT"
-python3 -m py_compile subskills/slide_to_primitive/extract_engine.py && ok "extract_engine.py" || fail "extract_engine.py won't compile"
-python3 -m py_compile services/svg/primitive_to_svg.py && ok "primitive_to_svg.py" || fail "primitive_to_svg.py won't compile"
+python3 -m py_compile services/extraction/extract_engine.py && ok "extract_engine.py" || fail "extract_engine.py won't compile"
+python3 -m py_compile services/svg/template_to_svg.py && ok "template_to_svg.py" || fail "template_to_svg.py won't compile"
 python3 -m py_compile services/qa/programmatic_qa.py && ok "programmatic_qa.py" || fail "programmatic_qa.py won't compile"
 
 # ── Step 6: Quick self-test ──
@@ -75,7 +75,7 @@ sys.path.insert(0, '.')
 os.chdir('$(echo $PISA_ROOT)')
 
 # Test SVG renderer
-from services.svg.primitive_to_svg import render_svg, NEUTRAL_THEME
+from services.svg.template_to_svg import render_svg, NEUTRAL_THEME
 test_prim = {
     'intent': 'kpi_dashboard', 'layout_type': 'grid', 'quality_score': 8.0,
     'semantic_groups': [], 'zones': [], 'components': [
@@ -91,9 +91,9 @@ assert len(svg) > 500, 'SVG too short'
 print('  SVG renderer: OK')
 
 # Test QA module loads
-from services.qa.programmatic_qa import qa_primitive
-issues = qa_primitive(test_prim)
-print(f'  QA engine: OK ({len(issues)} info items on test primitive)')
+from services.qa.programmatic_qa import qa_template
+issues = qa_template(test_prim)
+print(f'  QA engine: OK ({len(issues)} info items on test template)')
 " || fail "Self-test failed"
 ok "Self-test passed"
 
@@ -111,8 +111,8 @@ total_prims = 0
 for p in packs:
     if os.path.exists(p['url']):
         pack = json.load(open(p['url']))
-        total_prims += len(pack['primitives'])
-print(f'  Packs: {len(packs)} ({total_prims} primitives)')
+        total_prims += len(pack['templates'])
+print(f'  Packs: {len(packs)} ({total_prims} templates)')
 print(f'  Themes: {len(themes)}')
 print(f'  Personas: {len(personas)}')
 "

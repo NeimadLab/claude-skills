@@ -1,0 +1,39 @@
+{
+  "style_id": "photo",
+  "name": "Photo Focus",
+  "version": "1.0.0",
+  "description": "Image-first layouts. Photo zone dominates, text in sidebar or overlay.",
+  "source": {
+    "origin": "registry",
+    "type": "style"
+  },
+  "rules": {
+    "cards": {
+      "bg_pattern": "all_dark",
+      "corner_radius": 6,
+      "shadow": false,
+      "border": "left",
+      "border_thickness": 2
+    },
+    "title": {
+      "alignment": "left",
+      "size_multiplier": 1.0,
+      "letter_spacing": 0
+    },
+    "accent_bar": {
+      "position": "vertical_separator",
+      "width_pct": 0.3,
+      "thickness": 3
+    },
+    "spacing": {
+      "multiplier": 1.0,
+      "card_gap_pct": 2
+    },
+    "decoration": {
+      "geometric_accent": false,
+      "top_bar": false,
+      "bottom_bar": false,
+      "gradient_overlay": false
+    }
+  }
+}
