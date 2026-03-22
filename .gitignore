@@ -8,3 +8,14 @@ __pycache__/
 node_modules/
 _site/
 .jekyll-cache/
+
+# Loom workspace state
+.loom/
+!skills/loom/examples/python-project/.loom/
+
+# Python build artifacts
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
