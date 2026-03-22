@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   loom:
     build:
@@ -6,12 +8,17 @@ services:
     ports:
       - "8443:8443"
     volumes:
-      - loom-data:/workspace/.loom
-      - ./project:/workspace
+      - loom_data:/workspace/.loom
     environment:
-      - OAF_API_KEY=${OAF_API_KEY}
-      - OAF_LOG_LEVEL=info
+      - LOOM_API_KEY=${LOOM_API_KEY:-}
+      - LOOM_LOG_LEVEL=info
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8443/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 volumes:
-  loom-data:
+  loom_data:
+    driver: local

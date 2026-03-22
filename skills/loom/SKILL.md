@@ -1,7 +1,7 @@
 ---
 name: loom
 description: "Persistent AI workspace memory — search decisions, log context, track sessions, manage handoffs, and maintain project continuity across AI tools. Activate when the user mentions project memory, decisions, handoff, context transfer, workspace state, sessions, or Loom."
-version: 0.2.0
+version: 0.3.0
 ---
 
 # Loom — Persistent AI Workspace Memory

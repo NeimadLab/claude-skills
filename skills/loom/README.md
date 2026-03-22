@@ -7,7 +7,7 @@
 *A loom weaves separate threads into one fabric — Loom weaves your AI workspace context into one persistent, inspectable, transferable substrate.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Phase](https://img.shields.io/badge/Phase-0.2_Handoff-3498DB.svg)](ROADMAP.md)
+[![Phase](https://img.shields.io/badge/Phase-0.3_Hardening-E74C3C.svg)](ROADMAP.md)
 [![MCP](https://img.shields.io/badge/Protocol-MCP-8B5CF6.svg)](docs/gateway-model.md)
 
 [Problem](#the-problem) · [Solution](#the-solution) · [Quick Start](#quick-start) · [Architecture](docs/architecture.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
@@ -61,7 +61,7 @@ Loom is the workspace layer that makes AI-assisted development **persistent**, *
 ## Quick Start
 
 ```bash
-# Install from source (v0.2.0)
+# Install from source (v0.3.0)
 git clone https://github.com/NeimadLab/loom.git
 cd loom
 pip install -e .
@@ -194,8 +194,8 @@ See [`examples/python-project/`](examples/python-project/) for a full initialize
 | Phase | Name | Status |
 |-------|------|:------:|
 | **V0.1** | [Foundations](docs/product-evolution.md#v01--foundations) — Resume + Memory + Doctor | ✅ Done |
-| **V0.2** | [Sequential Handoff](docs/product-evolution.md#v02--sequential-model-handoff) — Sessions, tokens, import/export, gateway | ✅ Done |
-| **V0.3** | [Hardening](docs/product-evolution.md#v03--controlled-gateway--remote-access) — Policy engine, recovery, benchmarks | ⬜ Next |
+| **V0.2** | Sequential Handoff — sessions, tokens, import/export, gateway | ✅ Done |
+| **V0.3** | Hardening — policy engine, recovery, decay, benchmarks | ✅ Done |
 | **V1.0** | [Stable Substrate](docs/product-evolution.md#v10--stable-technical-substrate) — Contracts, PyPI, hybrid topology | ⬜ Planned |
 | **V2.0** | [Parallel Tracks](docs/product-evolution.md#v20--parallel-work-streams) — Multi-agent via Git worktrees | ⬜ Future |
 | **V3.0** | [Orchestrated Intelligence](docs/product-evolution.md#v30--coordinated-actor-ecosystem) — Role-based actor coordination | ⬜ Future |
@@ -231,7 +231,9 @@ Full details → [ROADMAP.md](ROADMAP.md) · Product evolution → [docs/product
 
 | Document | Description |
 |----------|-------------|
-| [MCP Tool Reference](docs/mcp-tool-reference.md) | All 6 MCP tools with parameters and examples |
+| **[All Features](docs/features.md)** | Complete feature reference with every command and tool |
+| **[Architecture & Diagrams](docs/architecture-diagrams.md)** | Deployment modes, data flow, security model (Mermaid diagrams) |
+| [MCP Tool Reference](docs/mcp-tool-reference.md) | All 8 MCP tools with parameters and examples |
 | [Architecture](docs/architecture.md) | Five pillars, state model, invariants |
 | [Memory Model](docs/memory-model.md) | How structured memory works |
 | [Security Model](docs/security-model.md) | Threat model, policies, action classes |
@@ -243,24 +245,34 @@ Full details → [ROADMAP.md](ROADMAP.md) · Product evolution → [docs/product
 
 ```
 loom/
-├── src/loom/              ← Core source code
-│   ├── cli/              ← CLI commands (init, resume, doctor...)
-│   ├── mcp/              ← MCP server implementation
-│   ├── memory/           ← SQLite memory layer
-│   ├── state/            ← Inventory, events, state index
-│   ├── gateway/          ← Policy engine, auth, gateway service
-│   └── runtime/          ← Container lifecycle, identity
-├── docs/                 ← Architecture, models, guides
-├── rfcs/                 ← Proposals for significant changes
-├── adrs/                 ← Architectural Decision Records
-├── templates/            ← DevContainer, policy, MCP configs
-├── deploy/               ← Docker, Fly.io deployment configs
-├── tests/                ← Unit, integration, e2e, contract, benchmark
-├── scripts/              ← Dev, release, benchmark utilities
-├── ROADMAP.md            ← Now / Next / Later / Not Planned
-├── CONTRIBUTING.md       ← How to contribute
-├── GOVERNANCE.md         ← Decision process
-└── SECURITY.md           ← Vulnerability reporting
+├── src/loom/              ← Core source (16 modules)
+│   ├── cli.py             ← 22 commands + 15 subcommands
+│   ├── mcp_server.py      ← 8 MCP tools over stdio
+│   ├── gateway.py         ← SSE/HTTP server + REST API
+│   ├── memory.py          ← SQLite + FTS5 store
+│   ├── sessions.py        ← Session/actor tracking
+│   ├── write_token.py     ← Lease-based single-writer lock
+│   ├── policy.py          ← YAML policy engine
+│   ├── recovery.py        ← Integrity check, rebuild, decay
+│   ├── import_export.py   ← CLAUDE.md / .cursorrules migration
+│   ├── team.py            ← Multi-user auth + roles
+│   ├── workspace_router.py ← Multi-project routing
+│   ├── docker.py          ← Volume restore + devcontainer
+│   ├── benchmark.py       ← Performance suite (p50/p95/p99)
+│   ├── runtime.py         ← Project detection + identity
+│   ├── events.py          ← Append-only event log
+│   ├── state.py           ← Health checks + workspace state
+│   ├── models.py          ← Data models + ID generation
+│   └── constants.py       ← Paths + config
+├── tests/                 ← 136 tests (unit + integration)
+│   ├── unit/              ← Module-level tests
+│   └── integration/       ← CLI E2E + cross-model handoff
+├── docs/                  ← 23 documentation files
+├── adrs/                  ← 4 Architectural Decision Records
+├── schemas/               ← JSON schemas (events, memory, policy)
+├── templates/             ← MCP configs, policies, devcontainer
+├── deploy/docker/         ← Dockerfile + docker-compose
+└── examples/              ← Sample project with populated .loom/
 ```
 
 ---

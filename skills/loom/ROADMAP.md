@@ -6,46 +6,40 @@
 - [x] `loom resume` — verify identity, restore Docker cache volumes
 - [x] `loom doctor` — 7-check health diagnostics
 - [x] `loom connect` — auto-configure MCP for Claude Code, Cursor, Windsurf
-- [x] `loom state` — workspace snapshot (identity, memory, events, git)
-- [x] `loom search` / `loom log` / `loom events` — memory CLI
+- [x] `loom state` / `loom search` / `loom log` / `loom events` — CLI
 - [x] MCP memory server (SQLite + FTS5) via stdio — 6 tools
-- [x] Append-only event log (JSONL)
-- [x] DevContainer template generation
-- [x] Runtime identity computation and manifest
-- [x] `--json` flag on all data commands
-- [x] Integration tests (28 E2E via subprocess)
+- [x] Append-only event log (JSONL), runtime identity, DevContainer template
+- [x] `--json` flag on all data commands, integration tests (28 E2E)
 
 ## Done (V0.2 — Sequential Handoff)
 
-- [x] Session and actor model (open/close/list/cleanup)
-- [x] Write token management (lease-based single-writer exclusion)
-- [x] `loom_get_handoff_summary` — structured transfer packets
-- [x] `loom context` — compact project onboarding (Rich, JSON, save)
-- [x] `loom import` / `loom export` — CLAUDE.md and .cursorrules migration
-- [x] `loom promote` / `loom reject` — memory status management
-- [x] Cross-model handoff E2E test (Claude Code → Cursor → Windsurf)
-- [x] MCP tools: `loom_open_session`, `loom_close_session` (8 tools total)
+- [x] Session/actor model: open, close, list, cleanup
+- [x] Write token: lease-based single-writer exclusion
+- [x] Import/export: CLAUDE.md, .cursorrules, markdown
+- [x] Promote/reject: hypothesis → validated / rejected
+- [x] `loom context` CLI with --json and --save
 - [x] Remote gateway (SSE/HTTP) with REST API and Bearer auth
-- [x] Docker volume restore on `loom resume`
+- [x] MCP tools: loom_open_session, loom_close_session (8 total)
+- [x] Cross-model handoff E2E test (Claude Code → Cursor → Windsurf)
 
-## Next (V0.3 — Hardening)
+## Done (V0.3 — Hardening)
 
-- [ ] Policy engine (evaluate YAML rules on every tool call)
-- [ ] Dockerfile tested end-to-end with gateway
-- [ ] Crash recovery (stale session cleanup on resume, integrity checks)
-- [ ] State rebuild from events.jsonl (`loom rebuild`)
-- [ ] Memory decay (auto-obsolete unvalidated entries past TTL)
-- [ ] Benchmark suite (`loom benchmark` — init, search, handoff latency)
-- [ ] Rate limiting on gateway endpoints
+- [x] Policy engine: YAML rules evaluated on every gateway tool call
+- [x] Crash recovery: integrity check (7 checks), auto-repair, FTS5 rebuild
+- [x] State rebuild: reconstruct memory.db from events.jsonl
+- [x] Memory decay: auto-obsolete unvalidated hypothesis entries past TTL
+- [x] Benchmark suite: init, write, search (p50/p95/p99), handoff, events
+- [x] Dockerfile tested with gateway entrypoint + docker-compose with healthcheck
 
-## Later (V1.0 — The Workspace Standard)
+## Next (V1.0 — The Workspace Standard)
 
-- [ ] Contract tests for all MCP tools (schema validation)
+- [ ] Contract tests for all MCP tools (schema validation, breaking change detection)
 - [ ] Compatibility matrix (Linux, macOS, Windows × Python 3.11–3.13)
 - [ ] PyPI publication (`pip install loom`)
 - [ ] Hybrid topology (local runtime + remote memory sync)
 - [ ] OAuth authentication (beyond API keys)
-- [ ] Reference demos and benchmarks published in CI
+- [ ] Rate limiting on gateway endpoints
+- [ ] Reference demos published in CI
 
 ## Future (V2.0–V3.0)
 
@@ -57,8 +51,6 @@
 - [ ] Managed SaaS option
 
 ## Not Planned
-
-These are explicitly out of scope to resist feature creep:
 
 - ❌ Visual IDE or GUI editor
 - ❌ Cloud-hosted model training or fine-tuning

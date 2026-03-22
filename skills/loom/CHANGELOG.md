@@ -7,74 +7,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] — 2026-03-22 — "Switch Models, Keep the Thread"
+## [0.3.0] — 2026-03-22 — "Trust, But Verify"
 
-The cross-model handoff release. Sessions, write tokens, import/export, and a remote gateway.
+The hardening release. Policy engine, crash recovery, memory decay, and performance benchmarks.
 
 ### Added
 
-#### Session & Actor Model
-- `loom session open <actor>` — track which AI tool is working
-- `loom session close` — end session with optional summary
-- `loom session list` — view session history with actors and models
-- `loom session cleanup` — auto-close stale sessions (>24h)
-- MCP tools: `loom_open_session`, `loom_close_session`
-- Sessions table in SQLite, persists in `memory.db`
+#### Policy Engine
+- `loom policy install` — install default YAML policy into workspace
+- `loom policy check <tool>` — preview what policy would decide
+- YAML rule evaluation on every gateway tool call (deny blocks execution)
+- Condition matching: `path_match`, `command_match`, `alias_match`
+- Decisions: `allow`, `deny`, `approve` with reasons logged to events
+- No PyYAML dependency — built-in minimal YAML parser
 
-#### Write Token (Single-Writer Exclusion)
-- `loom token acquire <session_id> <actor>` — lease-based write lock
-- `loom token release <session_id>` — release the lock
-- `loom token status` — check who holds the token
-- Configurable lease duration (default 15 min), auto-expire, `--force` reclaim
+#### Crash Recovery
+- `loom repair` — integrity check (7 checks) + auto-repair
+  - Cleans expired write tokens
+  - Closes stale sessions (>24h)
+  - Rebuilds FTS5 index if out of sync with memory table
+- `loom rebuild` — reconstruct memory.db from events.jsonl (nuclear option)
+  - Replays `decision_logged` and `memory_written` events
+  - Backs up corrupt memory.db before rebuilding
 
-#### Import / Export
-- `loom import CLAUDE.md` — import decisions and conventions from markdown
-- `loom import .cursorrules` — import from Cursor rules (JSON or plain text)
-- `loom export claude-md` — export validated decisions as CLAUDE.md
-- `loom export markdown` — full memory dump as readable markdown
+#### Memory Decay
+- `loom decay --ttl 30` — auto-obsolete unvalidated hypotheses older than TTL
+- `loom decay --dry-run` — preview what would be decayed
+- Only affects `hypothesis` status — validated/obsolete/rejected untouched
 
-#### Context CLI
-- `loom context` — compact project overview (goals, decisions, risks)
-- `loom context --json` — machine-readable output
-- `loom context --save` — write `.loom/context.md` for non-MCP tools
+#### Benchmark Suite
+- `loom benchmark` — run init, write, search, handoff, and event benchmarks
+- `loom benchmark --json` — machine-readable output
+- Reports p50/p95/p99 latencies for every operation
+- Search p95 verified under 10ms on 500 entries
 
-#### Promote / Reject
-- `loom promote <id>` — hypothesis → validated
-- `loom reject <id> -r "reason"` — hypothesis → rejected
-
-#### Remote Gateway (SSE/HTTP)
-- `loom gateway start` — SSE/HTTP server on configurable port
-- `loom gateway keygen` — generate secure API key
-- REST API: `/api/search`, `/api/log-decision`, `/api/handoff`, `/api/context`, `/api/write-memory`
-- MCP-over-HTTP: `/mcp/messages` (JSON-RPC)
-- Bearer token authentication via `LOOM_API_KEY`
-
-#### Docker & DevContainer
-- `loom resume` now detects Docker and restores cache volumes
-- `loom gateway devcontainer` — generate devcontainer.json with cache volumes
-
-#### --json Flag
-- Added to: `state`, `doctor`, `search`, `events`, `resume`, `context`, `session list`, `token status`
-
-#### Testing
-- 104 tests (73 unit + 31 integration), test/source ratio 49%
-- Cross-model handoff E2E test: Claude Code → Cursor → Windsurf
+#### Dockerfile
+- Dockerfile updated to use `loom gateway start` as entrypoint
+- docker-compose.yaml with persistent volume and healthcheck
+- `pip install .[gateway]` installs Starlette + uvicorn
 
 ### Changed
-- MCP server expanded from 6 to 8 tools
-- `loom resume` enhanced with Docker cache restore
+- Gateway now evaluates policy before dispatching tool calls
+- All new commands support `--json` flag
+
+## [0.2.0] — 2026-03-22 — "Switch Models, Keep the Thread"
+
+The cross-model handoff release.
+
+### Added
+- Session/actor model: `loom session open/close/list/cleanup`
+- Write token: `loom token acquire/release/status` (lease-based exclusion)
+- Import/export: `loom import CLAUDE.md`, `loom export claude-md`
+- Context CLI: `loom context --json --save`
+- Promote/reject: `loom promote <id>`, `loom reject <id> -r "reason"`
+- Remote gateway: `loom gateway start` (SSE/HTTP + REST API + Bearer auth)
+- Docker volume restore on `loom resume`
+- `--json` flag on state, doctor, search, events, resume
+- MCP tools: `loom_open_session`, `loom_close_session` (8 total)
+- Cross-model handoff E2E test (Claude Code → Cursor → Windsurf)
 
 ## [0.1.0] — 2026-03-22 — "Never Start From Scratch Again"
 
 First release. Memory layer, CLI, and MCP server.
 
 ### Added
-- CLI: `init`, `resume`, `doctor`, `state`, `connect`, `search`, `log`, `events`, `mcp serve`
+- CLI: init, resume, doctor, state, connect, search, log, events, mcp serve
 - MCP server with 6 tools over stdio transport
 - SQLite + FTS5 memory with typed records and status model
-- Runtime identity computation (SHA-256 of lockfiles)
-- Append-only event log (JSONL)
-- FTS5 query sanitization, thread-safe SQLite (WAL mode)
-- 21 documentation files, 4 ADRs, JSON schemas
+- Runtime identity computation, append-only event log
 - Setup guides for Claude Code, Cursor, Windsurf, Claude Desktop, Claude.ai, ChatGPT, Gemini
-- Docker deployment configs, example project

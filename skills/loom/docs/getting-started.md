@@ -27,7 +27,7 @@ Verify the installation:
 
 ```bash
 loom --version
-# loom, version 0.2.0
+# loom, version 0.3.0
 ```
 
 ## Step 2: Initialize Your Project

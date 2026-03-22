@@ -248,7 +248,7 @@ ChatGPT supports external APIs through Custom GPT "Actions".
 openapi: 3.1.0
 info:
   title: Loom Workspace Memory
-  version: 0.2.0
+  version: 0.3.0
 servers:
   - url: https://loom.yourdomain.com
 paths:

@@ -918,5 +918,355 @@ def devcontainer():
     console.print(f"[green]\u2713 Generated:[/] {dc_path}")
 
 
+# ────────────────────────────────────────────
+# loom policy
+# ────────────────────────────────────────────
+
+
+@main.group()
+def policy():
+    """Policy engine commands."""
+    pass
+
+
+@policy.command(name="install")
+def policy_install():
+    """Install the default policy file into the workspace."""
+    root = _require_workspace()
+    from loom.policy import install_default_policy
+
+    dest = install_default_policy(root)
+    console.print(f"[green]\u2713 Policy installed:[/] {dest}")
+    console.print("[dim]Edit the file to customize rules.[/]")
+
+
+@policy.command(name="check")
+@click.argument("tool_name")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def policy_check(tool_name: str, as_json: bool):
+    """Check what the policy would decide for a tool call."""
+    root = _require_workspace()
+    from loom.policy import evaluate
+
+    result = evaluate(tool_name, {}, root)
+
+    if as_json:
+        click.echo(json.dumps(result, indent=2))
+        return
+
+    style = {"allow": "green", "deny": "red", "approve": "yellow"}.get(result["decision"], "")
+    console.print(
+        f"  Tool:     [cyan]{tool_name}[/]\n"
+        f"  Decision: [{style}]{result['decision']}[/]\n"
+        f"  Reason:   {result['reason']}"
+    )
+
+
+# ────────────────────────────────────────────
+# loom repair / rebuild / decay
+# ────────────────────────────────────────────
+
+
+@main.command()
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def repair(as_json: bool):
+    """Repair workspace: clean stale tokens, sessions, rebuild FTS5."""
+    root = _require_workspace()
+    from loom.recovery import integrity_check
+    from loom.recovery import repair as do_repair
+
+    report = integrity_check(root)
+    fix_report = do_repair(root)
+
+    if as_json:
+        click.echo(json.dumps({"integrity": report, "repairs": fix_report}, indent=2, default=str))
+        return
+
+    # Show integrity checks
+    table = Table(title="Integrity Check", show_header=True)
+    table.add_column("Check", style="bold")
+    table.add_column("Status", justify="center")
+    table.add_column("Detail")
+    for c in report["checks"]:
+        status = "[green]\u2713[/]" if c["ok"] else "[red]\u2717[/]"
+        table.add_row(c["name"], status, c["detail"])
+    console.print(table)
+
+    if fix_report["repaired"] > 0:
+        console.print(f"\n[green]\u2713 Repaired {fix_report['repaired']} issue(s):[/]")
+        for d in fix_report["details"]:
+            console.print(f"  \u2022 {d}")
+    else:
+        console.print("\n[green]\u2713 No repairs needed.[/]")
+
+
+@main.command()
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def rebuild(as_json: bool):
+    """Reconstruct memory.db from events.jsonl (nuclear recovery option)."""
+    root = _require_workspace()
+    from loom.recovery import rebuild_from_events
+
+    console.print("[yellow]Rebuilding memory from events.jsonl...[/]")
+    result = rebuild_from_events(root)
+
+    if as_json:
+        click.echo(json.dumps(result, indent=2))
+        return
+
+    if "error" in result:
+        console.print(f"[red]\u2717 {result['error']}[/]")
+        sys.exit(1)
+
+    console.print(
+        f"[green]\u2713 Rebuilt {result['rebuilt']} entries[/] ({result['skipped']} skipped)"
+    )
+    if result["skipped"] > 0:
+        console.print("[dim]Skipped entries had missing or unrecoverable data.[/]")
+
+
+@main.command()
+@click.option("--ttl", default=30, help="Days before hypothesis entries are auto-obsoleted")
+@click.option("--dry-run", is_flag=True, help="Show what would decay without changing anything")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def decay(ttl: int, dry_run: bool, as_json: bool):
+    """Auto-obsolete unvalidated hypothesis entries older than TTL."""
+    root = _require_workspace()
+    from loom.recovery import decay_memories
+
+    result = decay_memories(root, ttl_days=ttl, dry_run=dry_run)
+
+    if as_json:
+        click.echo(json.dumps(result, indent=2, default=str))
+        return
+
+    if dry_run:
+        console.print(f"[yellow]Dry run:[/] {result['would_decay']} entries would be decayed")
+        for e in result.get("entries", []):
+            console.print(f"  \u2022 [dim]{e['id'][:12]}[/] {e['content']}")
+    else:
+        console.print(f"[green]\u2713 Decayed {result['decayed']} entries[/] (TTL: {ttl} days)")
+
+
+# ────────────────────────────────────────────
+# loom benchmark
+# ────────────────────────────────────────────
+
+
+@main.command()
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def benchmark(as_json: bool):
+    """Run performance benchmarks."""
+    from loom.benchmark import format_report, run_benchmarks
+
+    if not as_json:
+        console.print("[cyan]Running benchmarks...[/]\n")
+
+    results = run_benchmarks()
+
+    if as_json:
+        click.echo(json.dumps(results, indent=2))
+        return
+
+    console.print(format_report(results))
+
+
+# ────────────────────────────────────────────
+# loom team
+# ────────────────────────────────────────────
+
+
+@main.group()
+def team():
+    """Team management (multi-user access)."""
+    pass
+
+
+@team.command(name="add")
+@click.argument("name")
+@click.option("--role", type=click.Choice(["admin", "member", "viewer"]), default="member")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def team_add(name: str, role: str, as_json: bool):
+    """Add a team member and generate their API key."""
+    root = _require_workspace()
+    from loom.team import add_user
+
+    result = add_user(name, role, root)
+
+    if as_json:
+        click.echo(json.dumps(result, indent=2))
+        return
+
+    console.print(
+        f"[green]\u2713 User added:[/] {name} ({role})\n\n"
+        f"  API Key: [bold]{result['api_key']}[/]\n"
+        f"  User ID: [dim]{result['user_id']}[/]\n\n"
+        "[yellow]Save this key — it cannot be shown again.[/]"
+    )
+
+
+@team.command(name="list")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def team_list(as_json: bool):
+    """List team members."""
+    root = _require_workspace()
+    from loom.team import list_users
+
+    users = list_users(root)
+
+    if as_json:
+        click.echo(json.dumps(users, indent=2))
+        return
+
+    if not users:
+        console.print("[dim]No team members. Running in solo mode.[/]")
+        console.print("[dim]Use `loom team add <name>` to enable team mode.[/]")
+        return
+
+    table = Table(title="Team Members", show_header=True)
+    table.add_column("Name", style="cyan")
+    table.add_column("Role")
+    table.add_column("Key Prefix", style="dim")
+    table.add_column("User ID", style="dim", width=12)
+
+    for u in users:
+        table.add_row(u["name"], u["role"], u["key_prefix"], u["user_id"])
+    console.print(table)
+
+
+@team.command(name="remove")
+@click.argument("user_id")
+def team_remove(user_id: str):
+    """Remove a team member by user ID."""
+    root = _require_workspace()
+    from loom.team import remove_user
+
+    if remove_user(user_id, root):
+        console.print("[green]\u2713 User removed[/]")
+    else:
+        console.print(f"[red]User not found: {user_id}[/]")
+
+
+@team.command(name="limits")
+def team_limits():
+    """Show team mode limits and scaling guidance."""
+    from loom.team import TEAM_LIMITS
+
+    console.print(TEAM_LIMITS)
+
+
+# ────────────────────────────────────────────
+# loom workspace (multi-workspace router)
+# ────────────────────────────────────────────
+
+
+@main.group()
+def workspace():
+    """Multi-workspace management (serve multiple projects)."""
+    pass
+
+
+@workspace.command(name="register")
+@click.argument("path", type=click.Path(exists=True))
+@click.option("--name", "-n", default=None, help="Workspace name")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def ws_register(path: str, name: str | None, as_json: bool):
+    """Register a workspace with the multi-project router."""
+    from loom.workspace_router import WorkspaceRouter
+
+    router = WorkspaceRouter()
+    result = router.register(Path(path), name)
+
+    if as_json:
+        click.echo(json.dumps(result, indent=2))
+        return
+
+    if "error" in result:
+        console.print(f"[red]{result['error']}[/]")
+        return
+
+    console.print(
+        f"[green]\u2713 Workspace registered:[/] {result['name']}\n"
+        f"  ID:   [dim]{result['id']}[/]\n"
+        f"  Path: {result['path']}"
+    )
+
+
+@workspace.command(name="list")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def ws_list(as_json: bool):
+    """List all registered workspaces."""
+    from loom.workspace_router import WorkspaceRouter
+
+    router = WorkspaceRouter()
+    workspaces = router.list_workspaces()
+
+    if as_json:
+        click.echo(json.dumps(workspaces, indent=2))
+        return
+
+    if not workspaces:
+        console.print("[dim]No workspaces registered.[/]")
+        console.print("[dim]Use `loom workspace register /path/to/project` to add one.[/]")
+        return
+
+    table = Table(title="Workspaces", show_header=True)
+    table.add_column("Name", style="cyan")
+    table.add_column("ID", style="dim", width=14)
+    table.add_column("Path")
+    table.add_column("Health", justify="center")
+
+    for w in workspaces:
+        health = "[green]\u2713[/]" if w["healthy"] else "[red]\u2717[/]"
+        table.add_row(w["name"], w["id"], w["path"], health)
+    console.print(table)
+
+
+@workspace.command(name="remove")
+@click.argument("workspace_id")
+def ws_remove(workspace_id: str):
+    """Unregister a workspace (does not delete files)."""
+    from loom.workspace_router import WorkspaceRouter
+
+    router = WorkspaceRouter()
+    if router.unregister(workspace_id):
+        console.print("[green]\u2713 Workspace unregistered[/]")
+    else:
+        console.print(f"[red]Workspace not found: {workspace_id}[/]")
+
+
+@workspace.command(name="serve")
+@click.option("--host", default="0.0.0.0", help="Bind address")
+@click.option("--port", default=8443, help="Port")
+def ws_serve(host: str, port: int):
+    """Start the multi-workspace gateway server."""
+    import uvicorn
+
+    from loom.workspace_router import WorkspaceRouter, create_multi_workspace_app
+
+    router = WorkspaceRouter()
+    workspaces = router.list_workspaces()
+
+    console.print(
+        Panel(
+            f"[bold cyan]Multi-Workspace Gateway[/]\n\n"
+            f"  Host:       {host}\n"
+            f"  Port:       {port}\n"
+            f"  Workspaces: {len(workspaces)}\n\n"
+            + "".join(
+                f"  [{('green' if w['healthy'] else 'red')}]\u2022[/] {w['name']} → /w/{w['id']}/\n"
+                for w in workspaces
+            )
+            + f"\n  Health: http://{host}:{port}/health\n"
+            f"  List:   http://{host}:{port}/workspaces",
+            title="Gateway",
+            border_style="cyan",
+        )
+    )
+
+    app = create_multi_workspace_app()
+    uvicorn.run(app, host=host, port=port, log_level="info")
+
+
 if __name__ == "__main__":
     main()

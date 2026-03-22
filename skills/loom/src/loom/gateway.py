@@ -89,7 +89,7 @@ def create_app(workspace: Path | None = None):
     # ── REST endpoints (for ChatGPT Custom GPTs etc.) ───────
     async def health(request: Request) -> JSONResponse:
         """Health check endpoint."""
-        return JSONResponse({"status": "ok", "version": "0.2.0"})
+        return JSONResponse({"status": "ok", "version": "0.3.0"})
 
     async def api_search(request: Request) -> JSONResponse:
         """Search project memory."""
@@ -178,7 +178,7 @@ def create_app(workspace: Path | None = None):
                 result = {
                     "protocolVersion": "2024-11-05",
                     "capabilities": {"tools": {}},
-                    "serverInfo": {"name": "loom", "version": "0.2.0"},
+                    "serverInfo": {"name": "loom", "version": "0.3.0"},
                 }
             elif method == "tools/list":
                 from loom.mcp_server import TOOLS
@@ -187,11 +187,29 @@ def create_app(workspace: Path | None = None):
             elif method == "tools/call":
                 tool_name = params.get("name", "")
                 arguments = params.get("arguments", {})
-                handler_result = _dispatch_tool(tool_name, arguments, store, ws)
-                result = {
-                    "content": [{"type": "text", "text": json.dumps(handler_result)}],
-                    "isError": False,
-                }
+
+                # Policy check
+                from loom.policy import evaluate
+
+                policy_result = evaluate(tool_name, arguments, ws)
+                if policy_result["decision"] == "deny":
+                    result = {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": json.dumps(
+                                    {"error": "denied_by_policy", "reason": policy_result["reason"]}
+                                ),
+                            }
+                        ],
+                        "isError": True,
+                    }
+                else:
+                    handler_result = _dispatch_tool(tool_name, arguments, store, ws)
+                    result = {
+                        "content": [{"type": "text", "text": json.dumps(handler_result)}],
+                        "isError": False,
+                    }
                 _log_api_call(tool_name, request, ws)
             else:
                 result = {"error": f"Unknown method: {method}"}
