@@ -100,3 +100,5 @@ skills/pisa/
 ## Contributing to PISA
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for pack quality requirements, theme token specs, and persona format.
+
+See [ROADMAP.md](ROADMAP.md) for what's planned and where to contribute.

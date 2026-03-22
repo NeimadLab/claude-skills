@@ -13,3 +13,4 @@ Complete reference documentation for PISA v1.0.
 | [Workflows](workflows.md) | Workflows A–F complete reference |
 | [Registry Setup](registry-setup.md) | GitHub registry, packs, themes, CI |
 | [Tier 2 Local Setup](tier2-setup.md) | Persistent library, local development |
+| [Roadmap](../ROADMAP.md) | What's planned: v1.2–v2.0 and how to contribute |
